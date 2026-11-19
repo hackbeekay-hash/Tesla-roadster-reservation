@@ -1,0 +1,2134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tesla Roadster</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <style>
+        .metallic-text {
+            background: linear-gradient(180deg, #e6e6d8 0%, #a8a38d 50%, #686352 100%);
+        : text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+    <script>
+        let paidTodayAmount = 500;
+        let remainingBalanceAmount = 49500;
+        let currentRN = 'RN508146086';
+        let userEmailAccount = 'ENTER YOUR EMAIL';
+        let userFullName = 'Valued Customer';
+        let selectedTierName = 'Performance';
+        let selectedInteriorTrim = 'Carbon Fiber Standard (01)';
+        let selectedWheelVariant = 'Turbine Wheels Gen 1 (01)';
+        let isFullyPaid = false;
+        let pendingPartialAmount = 0;
+        let isDarkMode = true;
+        let generatedTwoFactorCode = '482910';
+        let currentLanguage = 'en';
+
+        const languageText = {
+            en: {
+                language: 'Language',
+                lightMode: '☀️ Light Mode',
+                darkMode: '🌙 Dark Mode',
+                menu: 'Menu',
+                color: 'Color:',
+                acceleration: '0-60 mph',
+                topSpeed: 'Top Speed',
+                range: 'Range',
+                reserve: 'Reserve Now',
+                portalMenu: 'Tesla Portal Menu',
+                returningCustomer: 'Returning Customer?',
+                signInPrompt: 'Sign in with your reservation email to access your active dashboard.',
+                signIn: 'Sign In to Account',
+                vehicleLineup: 'Vehicle Lineup',
+                customerSignIn: 'Customer Sign In'
+            },
+            es: {
+                language: 'Idioma',
+                lightMode: '☀️ Modo claro',
+                darkMode: '🌙 Modo oscuro',
+                menu: 'Menú',
+                color: 'Color:',
+                acceleration: '0-60 mph',
+                topSpeed: 'Velocidad máxima',
+                range: 'Autonomía',
+                reserve: 'Reservar ahora',
+                portalMenu: 'Menú del portal Tesla',
+                returningCustomer: '¿Ya eres cliente?',
+                signInPrompt: 'Inicia sesión con el correo de tu reserva para acceder a tu panel.',
+                signIn: 'Iniciar sesión',
+                vehicleLineup: 'Modelos',
+                customerSignIn: 'Acceso de clientes'
+            },
+            fr: {
+                language: 'Langue',
+                lightMode: '☀️ Mode clair',
+                darkMode: '🌙 Mode sombre',
+                menu: 'Menu',
+                color: 'Couleur :',
+                acceleration: '0-60 mph',
+                topSpeed: 'Vitesse maximale',
+                range: 'Autonomie',
+                reserve: 'Réserver',
+                portalMenu: 'Menu du portail Tesla',
+                returningCustomer: 'Déjà client ?',
+                signInPrompt: 'Connectez-vous avec l’adresse e-mail de votre réservation pour accéder à votre espace.',
+                signIn: 'Se connecter',
+                vehicleLineup: 'Gamme de véhicules',
+                customerSignIn: 'Connexion client'
+            },
+            de: {
+                language: 'Sprache',
+                lightMode: '☀️ Heller Modus',
+                darkMode: '🌙 Dunkler Modus',
+                menu: 'Menü',
+                color: 'Farbe:',
+                acceleration: '0-60 mph',
+                topSpeed: 'Höchstgeschwindigkeit',
+                range: 'Reichweite',
+                reserve: 'Jetzt reservieren',
+                portalMenu: 'Tesla-Portalmenü',
+                returningCustomer: 'Bereits Kunde?',
+                signInPrompt: 'Melden Sie sich mit der E-Mail-Adresse Ihrer Reservierung an, um Ihr Dashboard aufzurufen.',
+                signIn: 'Im Konto anmelden',
+                vehicleLineup: 'Fahrzeugmodelle',
+                customerSignIn: 'Kundenanmeldung'
+            },
+            pt: {
+                language: 'Idioma',
+                lightMode: '☀️ Modo claro',
+                darkMode: '🌙 Modo escuro',
+                menu: 'Menu',
+                color: 'Cor:',
+                acceleration: '0-60 mph',
+                topSpeed: 'Velocidade máxima',
+                range: 'Autonomia',
+                reserve: 'Reservar agora',
+                portalMenu: 'Menu do Portal Tesla',
+                returningCustomer: 'Já é cliente?',
+                signInPrompt: 'Entre com o e-mail da sua reserva para acessar o painel.',
+                signIn: 'Entrar na conta',
+                vehicleLineup: 'Modelos de veículos',
+                customerSignIn: 'Acesso do cliente'
+            },
+            it: {
+                language: 'Lingua',
+                lightMode: '☀️ Modalità chiara',
+                darkMode: '🌙 Modalità scura',
+                menu: 'Menu',
+                color: 'Colore:',
+                acceleration: '0-60 mph',
+                topSpeed: 'Velocità massima',
+                range: 'Autonomia',
+                reserve: 'Prenota ora',
+                portalMenu: 'Menu del portale Tesla',
+                returningCustomer: 'Sei già cliente?',
+                signInPrompt: 'Accedi con l’e-mail della prenotazione per aprire il tuo pannello.',
+                signIn: 'Accedi al tuo account',
+                vehicleLineup: 'Modelli',
+                customerSignIn: 'Accesso clienti'
+            },
+            zh: {
+                language: '语言',
+                lightMode: '☀️ 浅色模式',
+                darkMode: '🌙 深色模式',
+                menu: '菜单',
+                color: '颜色：',
+                acceleration: '0-60 英里/小时',
+                topSpeed: '最高速度',
+                range: '续航里程',
+                reserve: '立即预订',
+                portalMenu: 'Tesla 门户菜单',
+                returningCustomer: '已经是客户？',
+                signInPrompt: '使用预订邮箱登录以访问您的面板。',
+                signIn: '登录账户',
+                vehicleLineup: '车型',
+                customerSignIn: '客户登录'
+            },
+            ja: {
+                language: '言語',
+                lightMode: '☀️ ライトモード',
+                darkMode: '🌙 ダークモード',
+                menu: 'メニュー',
+                color: 'カラー：',
+                acceleration: '0-60 mph',
+                topSpeed: '最高速度',
+                range: '航続距離',
+                reserve: '今すぐ予約',
+                portalMenu: 'Tesla ポータルメニュー',
+                returningCustomer: 'すでにご利用のお客様ですか？',
+                signInPrompt: '予約時のメールアドレスでログインしてダッシュボードをご覧ください。',
+                signIn: 'アカウントにログイン',
+                vehicleLineup: '車種一覧',
+                customerSignIn: 'お客様ログイン'
+            },
+            ko: {
+                language: '언어',
+                lightMode: '☀️ 라이트 모드',
+                darkMode: '🌙 다크 모드',
+                menu: '메뉴',
+                color: '색상:',
+                acceleration: '0-60 mph',
+                topSpeed: '최고 속도',
+                range: '주행 가능 거리',
+                reserve: '지금 예약',
+                portalMenu: 'Tesla 포털 메뉴',
+                returningCustomer: '기존 고객이신가요?',
+                signInPrompt: '예약 이메일로 로그인하여 대시보드에 접속하세요.',
+                signIn: '계정 로그인',
+                vehicleLineup: '차량 라인업',
+                customerSignIn: '고객 로그인'
+            },
+            ru: {
+                language: 'Язык',
+                lightMode: '☀️ Светлая тема',
+                darkMode: '🌙 Тёмная тема',
+                menu: 'Меню',
+                color: 'Цвет:',
+                acceleration: '0-60 миль/ч',
+                topSpeed: 'Максимальная скорость',
+                range: 'Запас хода',
+                reserve: 'Забронировать',
+                portalMenu: 'Меню портала Tesla',
+                returningCustomer: 'Вы уже клиент?',
+                signInPrompt: 'Войдите с адресом электронной почты, указанным при бронировании, чтобы открыть панель.',
+                signIn: 'Войти в аккаунт',
+                vehicleLineup: 'Модельный ряд',
+                customerSignIn: 'Вход для клиентов'
+            },
+            hi: {
+                language: 'भाषा',
+                lightMode: '☀️ लाइट मोड',
+                darkMode: '🌙 डार्क मोड',
+                menu: 'मेन्यू',
+                color: 'रंग:',
+                acceleration: '0-60 mph',
+                topSpeed: 'अधिकतम गति',
+                range: 'रेंज',
+                reserve: 'अभी आरक्षित करें',
+                portalMenu: 'Tesla पोर्टल मेन्यू',
+                returningCustomer: 'क्या आप पहले से ग्राहक हैं?',
+                signInPrompt: 'अपने डैशबोर्ड तक पहुँचने के लिए आरक्षण वाला ईमेल इस्तेमाल करके साइन इन करें।',
+                signIn: 'खाते में साइन इन करें',
+                vehicleLineup: 'वाहन मॉडल',
+                customerSignIn: 'ग्राहक साइन इन'
+            }
+        };
+
+        // 100 Interior Options List
+        let interiorOptionsList = [];
+        const interiorPrefixes = ["Carbon Fiber", "Ultra White", "Jet Black", "Alcantara Sport", "Obsidian Wood", "Cream Luxury", "Red Accent", "Midnight Blue", "Titanium Metal", "Plaid Cloth", "Gold Executive", "Platinum Custom", "Vegas Gold", "Matte Carbon", "Suede Luxe", "Perforated Leather", "Diamond Stitched", "Velvet Dark", "Obsidian Gray", "Frost White"];
+        const interiorSuffixes = ["Standard", "Edition I", "Edition II", "V1", "V2", "V3", "Signature", "Elite", "Custom", "Exclusive", "Bespoke", "Master", "Prime", "Ultra", "Max", "Grand", "Super", "Luxury", "Sport", "Hyper"];
+        
+        let counter = 1;
+        for (let p of interiorPrefixes) {
+            for (let s of interiorSuffixes) {
+                interiorOptionsList.push(`${p} ${s} (${counter < 10 ? '0' + counter : counter})`);
+                counter++;
+            }
+        }
+        interiorOptionsList = interiorOptionsList.slice(0, 100);
+
+        // 100 Wheel Options List
+        let wheelOptionsList = [];
+        const wheelPrefixes = ["Turbine Wheels", "Aero Closed", "Forged Track", "Carbon Composite", "Cyber Spoke", "Matte Arachnid", "Gold Racing", "Magnesium Light", "Aero Blade", "Titanium Spoke", "CYBRDISC", "Hyper Spoke", "Apex Forged", "Vortex Aero", "Stellar Rim", "Plasma Edge", "Solaris Wheel", "Eclipse Spoke", "Velocity Dish", "Quantum Blade"];
+        const wheelSuffixes = ["Gen 1", "Gen 2", "Gen 3", "Alpha", "Beta", "Gamma", "Delta", "Omega", "Pro", "Max", "Ultra", "V1", "V2", "X1", "X2", "GT1", "GT2", "Track", "Sport", "Bespoke"];
+
+        counter = 1;
+        for (let p of wheelPrefixes) {
+            for (let s of wheelSuffixes) {
+                wheelOptionsList.push(`${p} ${s} (${counter < 10 ? '0' + counter : counter})`);
+                counter++;
+            }
+        }
+        wheelOptionsList = wheelOptionsList.slice(0, 100);
+
+        let tempCustomerInfo = {
+            fullName: 'Valued Customer', email: 'hackbeekay@gmail.com', phone: '', dob: '', nationality: '', idTypes: [], idNumber: '', occupation: '', annualIncome: '', companyName: '', taxResidency: '', address: '', city: '', state: '', zip: '', country: '', preferredHub: '', emergencyContactName: '', emergencyContactPhone: '', currentVehicle: '', referralSource: '', selfieData: ''
+        };
+
+        let userDeliveryInfo = {
+            fullName: 'Valued Customer', address: '10 Tesla Way', city: 'Austin', state: 'TX', zip: '78725', phone: '+1 (555) 019-2834', center: 'Austin Delivery Hub (Gigafactory Texas)'
+        };
+
+        let userTransactions = [
+            { id: 'TX-94810', date: '2026-11-10', amount: 500, method: 'Crypto (BEP20)', status: 'Verified' }
+        ];
+
+        const existingUsersDatabase = {
+            'hackbeekay@gmail.com': {
+                rn: 'RN508146086',
+                name: 'Valued Customer',
+                paid: 500,
+                remaining: 49500,
+                tier: 'Performance',
+                interior: 'Carbon Fiber Standard (01)',
+                wheels: 'Turbine Wheels Gen 1 (01)',
+                fullyPaid: false,
+                passkeyEnabled: false,
+                transactions: [
+                    { id: 'TX-94810', date: '2026-11-10', amount: 500, method: 'Crypto (BEP20)', status: 'Verified' }
+                ],
+                delivery: {
+                    fullName: 'Valued Customer', address: '10 Tesla Way', city: 'Austin', state: 'TX', zip: '78725', phone: '+1 (555) 019-2834', center: 'Austin Delivery Hub (Gigafactory Texas)'
+                }
+            }
+        };
+
+        function toggleModal(modalId, show) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                if (show) modal.classList.remove('hidden');
+                else modal.classList.add('hidden');
+            }
+        }
+
+        function toggleMenu(show) {
+            const menu = document.getElementById('sideMenu');
+            if (menu) {
+                if (show) menu.classList.remove('hidden');
+                else menu.classList.add('hidden');
+            }
+        }
+
+        function applyLanguage(language) {
+            if (!Object.prototype.hasOwnProperty.call(languageText, language)) return;
+
+            currentLanguage = language;
+            document.documentElement.lang = language;
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.dataset.i18n;
+                element.textContent = languageText[language][key];
+            });
+
+            const themeBtn = document.getElementById('themeToggleBtn');
+            if (themeBtn) themeBtn.textContent = isDarkMode ? languageText[language].lightMode : languageText[language].darkMode;
+
+            const languageSelect = document.getElementById('languageSelect');
+            if (languageSelect) languageSelect.value = language;
+        }
+
+        function setLanguage(language) {
+            if (!Object.prototype.hasOwnProperty.call(languageText, language)) return;
+
+            applyLanguage(language);
+            try {
+                localStorage.setItem('siteLanguage', language);
+            } catch (error) {
+                console.warn('Could not save the language preference.', error);
+            }
+        }
+
+        function toggleThemeMode() {
+            isDarkMode = !isDarkMode;
+            const bodyEl = document.getElementById('mainBody');
+            const themeBtn = document.getElementById('themeToggleBtn');
+            const headerLogo = document.getElementById('headerLogo');
+
+            if (isDarkMode) {
+                bodyEl.className = 'bg-black text-white font-sans m-0 overflow-x-hidden select-none transition-colors duration-300';
+                themeBtn.innerText = languageText[currentLanguage].lightMode;
+                themeBtn.className = 'text-xs font-medium text-gray-200 hover:text-white px-3 py-1.5 bg-white/10 rounded-full backdrop-blur-md transition';
+                if (headerLogo) headerLogo.className = 'text-xl font-bold tracking-[0.4em] text-gray-200';
+            } else {
+                bodyEl.className = 'bg-gray-100 text-black font-sans m-0 overflow-x-hidden select-none transition-colors duration-300';
+                themeBtn.innerText = languageText[currentLanguage].darkMode;
+                themeBtn.className = 'text-xs font-medium text-gray-800 hover:text-black px-3 py-1.5 bg-black/10 rounded-full backdrop-blur-md transition';
+                if (headerLogo) headerLogo.className = 'text-xl font-bold tracking-[0.4em] text-black';
+            }
+        }
+
+        function switchDashboardTab(tabName) {
+            const tabs = ['dashTabOverview', 'dashTabTransactions', 'dashTabSpecs', 'dashTabReferral', 'dashTabDelivery'];
+            const buttons = ['btnTabOverview', 'btnTabTransactions', 'btnTabSpecs', 'btnTabReferral', 'btnTabDelivery'];
+
+            tabs.forEach(t => {
+                const el = document.getElementById(t);
+                if (el) el.classList.add('hidden');
+            });
+
+            buttons.forEach(b => {
+                const btn = document.getElementById(b);
+                if (btn) btn.className = 'py-2 px-3 text-xs font-semibold text-gray-400 border-b-2 border-transparent whitespace-nowrap transition';
+            });
+
+            const activeTabMap = {
+                overview: 'dashTabOverview',
+                transactions: 'dashTabTransactions',
+                specs: 'dashTabSpecs',
+                referral: 'dashTabReferral',
+                delivery: 'dashTabDelivery'
+            };
+
+            const activeButtonMap = {
+                overview: 'btnTabOverview',
+                transactions: 'btnTabTransactions',
+                specs: 'btnTabSpecs',
+                referral: 'btnTabReferral',
+                delivery: 'btnTabDelivery'
+            };
+
+            if (activeTabMap[tabName]) document.getElementById(activeTabMap[tabName]).classList.remove('hidden');
+            if (activeButtonMap[tabName]) document.getElementById(activeButtonMap[tabName]).className = 'py-2 px-3 text-xs font-bold text-amber-400 border-b-2 border-amber-400 whitespace-nowrap transition';
+        }
+
+        function handleCustomerDetailsSubmit(event) {
+            event.preventDefault();
+            const checkedBoxes = document.querySelectorAll('input[name="primaryIdTypes"]:checked');
+            const selectedIds = Array.from(checkedBoxes).map(cb => cb.value);
+
+            if (selectedIds.length === 0) {
+                alert('Please select at least one identification document.');
+                return;
+            }
+
+            tempCustomerInfo = {
+                fullName: document.getElementById('qFullName').value.trim(),
+                email: document.getElementById('qEmail').value.trim().toLowerCase(),
+                phone: document.getElementById('qPhone').value.trim(),
+                dob: document.getElementById('qDob').value,
+                nationality: document.getElementById('qNationality').value.trim(),
+                idTypes: selectedIds,
+                idNumber: document.getElementById('qIdNumber').value.trim(),
+                occupation: document.getElementById('qOccupation').value.trim(),
+                annualIncome: document.getElementById('qIncome').value.trim(),
+                companyName: document.getElementById('qCompany').value.trim(),
+                taxResidency: document.getElementById('qTaxResidency').value.trim(),
+                address: document.getElementById('qAddress').value.trim(),
+                city: document.getElementById('qCity').value.trim(),
+                state: document.getElementById('qState').value.trim(),
+                zip: document.getElementById('qZip').value.trim(),
+                country: document.getElementById('qCountry').value.trim(),
+                preferredHub: document.getElementById('qCenter').value,
+                emergencyContactName: document.getElementById('qEmergName').value.trim(),
+                emergencyContactPhone: document.getElementById('qEmergPhone').value.trim(),
+                currentVehicle: document.getElementById('qCurrCar').value.trim(),
+                referralSource: document.getElementById('qSource').value
+            };
+
+            userEmailAccount = tempCustomerInfo.email;
+            userFullName = tempCustomerInfo.fullName;
+            userDeliveryInfo = { 
+                fullName: tempCustomerInfo.fullName, address: tempCustomerInfo.address, city: tempCustomerInfo.city, state: tempCustomerInfo.state, zip: tempCustomerInfo.zip, phone: tempCustomerInfo.phone, center: tempCustomerInfo.preferredHub
+            };
+
+            toggleModal('comprehensiveFormModal', false);
+            toggleModal('selfieVerificationModal', true);
+            startCameraPreview();
+        }
+
+        let videoStream = null;
+
+        function startCameraPreview() {
+            const videoEl = document.getElementById('selfieVideo');
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(stream => {
+                        videoStream = stream;
+                        videoEl.srcObject = stream;
+                        videoEl.play();
+                    })
+                    .catch(err => { console.log('Camera note: ' + err); });
+            }
+        }
+
+        function captureSelfieSnapshot() {
+            const videoEl = document.getElementById('selfieVideo');
+            const canvasEl = document.getElementById('selfieCanvas');
+            const previewImg = document.getElementById('selfiePreviewImg');
+            
+            canvasEl.width = videoEl.videoWidth || 320;
+            canvasEl.height = videoEl.videoHeight || 240;
+            const ctx = canvasEl.getContext('2d');
+            ctx.drawImage(videoEl, 0, 0, canvasEl.width, canvasEl.height);
+            
+            const dataURL = canvasEl.toDataURL('image/png');
+            tempCustomerInfo.selfieData = dataURL;
+
+            previewImg.src = dataURL;
+            previewImg.classList.remove('hidden');
+            videoEl.classList.add('hidden');
+
+            if (videoStream) {
+                videoStream.getTracks().forEach(track => track.stop());
+            }
+
+            document.getElementById('captureSelfieBtn').classList.add('hidden');
+            document.getElementById('confirmSelfieBtn').classList.remove('hidden');
+        }
+
+        function handleSelfieConfirmed() {
+            toggleModal('selfieVerificationModal', false);
+            toggleModal('reservationPaymentModal', true);
+        }
+
+        function completeOrder(customVal, methodUsed = 'Crypto (BEP20)') {
+            if (customVal && Number(customVal) >= 500) {
+                paidTodayAmount = Number(customVal);
+            }
+
+            remainingBalanceAmount = 50000 - paidTodayAmount;
+            if (remainingBalanceAmount <= 0) {
+                remainingBalanceAmount = 0;
+                isFullyPaid = true;
+            }
+
+            const selectedTierRadio = document.querySelector('input[name="roadsterTier"]:checked');
+            if (selectedTierRadio) {
+                selectedTierName = selectedTierRadio.value;
+            }
+
+            currentRN = 'RN' + Math.floor(100000000 + Math.random() * 900000000);
+            
+            const newTx = {
+                id: 'TX-' + Math.floor(10000 + Math.random() * 90000),
+                date: new Date().toISOString().split('T')[0],
+                amount: paidTodayAmount,
+                method: methodUsed,
+                status: 'Verified'
+            };
+
+            userTransactions = [newTx];
+
+            existingUsersDatabase[userEmailAccount] = {
+                rn: currentRN,
+                name: userFullName,
+                paid: paidTodayAmount,
+                remaining: remainingBalanceAmount,
+                tier: selectedTierName,
+                interior: selectedInteriorTrim,
+                wheels: selectedWheelVariant,
+                fullyPaid: isFullyPaid,
+                passkeyEnabled: false,
+                transactions: userTransactions,
+                delivery: userDeliveryInfo
+            };
+
+            document.getElementById('rnNumberDisplay').innerText = currentRN;
+            document.getElementById('paidTodayDisplay').innerText = '$' + paidTodayAmount.toLocaleString();
+            document.getElementById('remainingBalanceDisplay').innerText = '$' + remainingBalanceAmount.toLocaleString();
+
+            toggleModal('reservationModal', false);
+            toggleModal('comprehensiveFormModal', false);
+            toggleModal('selfieVerificationModal', false);
+            toggleModal('reservationPaymentModal', false);
+            toggleModal('cryptoModal', false);
+            toggleModal('paypalModal', false);
+            toggleModal('confirmingModal', false);
+            toggleModal('orderSuccessModal', true);
+        }
+
+        function handleCardSubmit(event) {
+            event.preventDefault();
+            const cardInput = document.getElementById('cardAmountInput');
+            const amt = cardInput ? cardInput.value : 500;
+            completeOrder(amt, 'Credit Card');
+        }
+
+        function handleCryptoSubmit(event) {
+            event.preventDefault();
+            const checkbox = document.getElementById('networkConfirmCheck');
+            if (!checkbox.checked) {
+                alert('Please confirm that you are sending via the Binance Smart Chain (BEP20) network.');
+                return;
+            }
+            const cryptoAmt = document.getElementById('cryptoAmountInput').value;
+            completeOrder(cryptoAmt, 'USDT / BNB (BEP20)');
+        }
+
+        function handleLoginSubmit(event) {
+            event.preventDefault();
+            const emailInput = document.getElementById('loginEmailInput').value.trim().toLowerCase();
+            userEmailAccount = emailInput;
+
+            toggleModal('loginModal', false);
+            toggleMenu(false);
+
+            if (existingUsersDatabase[userEmailAccount] && existingUsersDatabase[userEmailAccount].passkeyEnabled) {
+                alert('🔐 Passkey recognized! Authenticating via Face ID / Touch ID...');
+                loadUserData(existingUsersDatabase[userEmailAccount]);
+                return;
+            }
+
+            generatedTwoFactorCode = Math.floor(100000 + Math.random() * 900000).toString();
+            document.getElementById('twoFactorEmailDisplay').innerText = userEmailAccount;
+            
+            alert('🔒 [Security Simulation] 2FA Verification Code sent to ' + userEmailAccount + '\nYour Code is: ' + generatedTwoFactorCode);
+            toggleModal('twoFactorModal', true);
+        }
+
+        function handle2FASubmit(event) {
+            event.preventDefault();
+            const enteredCode = document.getElementById('twoFactorInput').value.trim();
+
+            if (enteredCode !== generatedTwoFactorCode && enteredCode !== '123456') {
+                alert('Invalid 2FA code. Please enter the correct verification code.');
+                return;
+            }
+
+            toggleModal('twoFactorModal', false);
+
+            if (existingUsersDatabase[userEmailAccount]) {
+                loadUserData(existingUsersDatabase[userEmailAccount]);
+                
+                if (!existingUsersDatabase[userEmailAccount].passkeyEnabled) {
+                    setTimeout(() => {
+                        if (confirm('🔑 Do you want to save a Passkey (Face ID / Touch ID) for this device so you can sign in instantly next time without a password or 2FA?')) {
+                            existingUsersDatabase[userEmailAccount].passkeyEnabled = true;
+                            alert('✅ Passkey saved successfully!');
+                            refreshPasskeyStatusUI();
+                        }
+                    }, 500);
+                }
+            } else {
+                alert('Welcome! No active reservation found for this email. Please complete the reservation form.');
+                toggleModal('reservationModal', true);
+            }
+        }
+
+        function loadUserData(userData) {
+            currentRN = userData.rn;
+            userFullName = userData.name || 'Valued Customer';
+            paidTodayAmount = userData.paid;
+            remainingBalanceAmount = userData.remaining;
+            selectedTierName = userData.tier || 'Performance';
+            selectedInteriorTrim = userData.interior || 'Carbon Fiber Standard (01)';
+            selectedWheelVariant = userData.wheels || 'Turbine Wheels Gen 1 (01)';
+            isFullyPaid = userData.fullyPaid;
+            userTransactions = userData.transactions || [];
+            if (userData.delivery) userDeliveryInfo = userData.delivery;
+
+            refreshDashboardData();
+            toggleModal('accountDashboardModal', true);
+        }
+
+        // --- NATIVE MOBILE DROPDOWN BUILDERS ---
+        function populateNativeSelects() {
+            const interiorSelect = document.getElementById('nativeInteriorSelect');
+            const wheelSelect = document.getElementById('nativeWheelSelect');
+
+            if (interiorSelect && interiorSelect.children.length === 0) {
+                interiorOptionsList.forEach(opt => {
+                    const optionEl = document.createElement('option');
+                    optionEl.value = opt;
+                    optionEl.innerText = opt;
+                    if (opt === selectedInteriorTrim) optionEl.selected = true;
+                    interiorSelect.appendChild(optionEl);
+                });
+            }
+
+            if (wheelSelect && wheelSelect.children.length === 0) {
+                wheelOptionsList.forEach(opt => {
+                    const optionEl = document.createElement('option');
+                    optionEl.value = opt;
+                    optionEl.innerText = opt;
+                    if (opt === selectedWheelVariant) optionEl.selected = true;
+                    wheelSelect.appendChild(optionEl);
+                });
+            }
+        }
+
+        function handleInteriorChange(val) {
+            selectedInteriorTrim = val;
+            if (existingUsersDatabase[userEmailAccount]) {
+                existingUsersDatabase[userEmailAccount].interior = val;
+            }
+        }
+
+        function handleWheelChange(val) {
+            selectedWheelVariant = val;
+            if (existingUsersDatabase[userEmailAccount]) {
+                existingUsersDatabase[userEmailAccount].wheels = val;
+            }
+        }
+
+        function refreshPasskeyStatusUI() {
+            const passkeyStatusEl = document.getElementById('passkeyStatusText');
+            if (passkeyStatusEl && existingUsersDatabase[userEmailAccount]) {
+                if (existingUsersDatabase[userEmailAccount].passkeyEnabled) {
+                    passkeyStatusEl.innerHTML = '<span class="text-green-400 font-semibold">● Passkey Active (Biometric sign-in enabled)</span>';
+                } else {
+                    passkeyStatusEl.innerHTML = '<button onclick="enablePasskeyManually()" class="text-amber-400 underline text-xs">Enable Passkey for this device</button>';
+                }
+            }
+        }
+
+        function enablePasskeyManually() {
+            if (existingUsersDatabase[userEmailAccount]) {
+                existingUsersDatabase[userEmailAccount].passkeyEnabled = true;
+                alert('✅ Passkey successfully registered for this device!');
+                refreshPasskeyStatusUI();
+            }
+        }
+
+        function saveDeliveryAddress(event) {
+            event.preventDefault();
+            userDeliveryInfo = {
+                fullName: document.getElementById('delName').value,
+                address: document.getElementById('delAddress').value,
+                city: document.getElementById('delCity').value,
+                state: document.getElementById('delState').value,
+                zip: document.getElementById('delZip').value,
+                phone: document.getElementById('delPhone').value,
+                center: document.getElementById('delCenter').value
+            };
+
+            userFullName = userDeliveryInfo.fullName;
+            if (existingUsersDatabase[userEmailAccount]) {
+                existingUsersDatabase[userEmailAccount].name = userFullName;
+                existingUsersDatabase[userEmailAccount].delivery = userDeliveryInfo;
+            }
+
+            alert('🚚 Delivery logistics information saved successfully!');
+        }
+
+        function refreshDashboardData() {
+            document.getElementById('dashboardEmail').innerText = userEmailAccount;
+            document.getElementById('dashboardRN').innerText = currentRN;
+            document.getElementById('dashPaidToday').innerText = '$' + paidTodayAmount.toLocaleString();
+            document.getElementById('dashRemaining').innerText = '$' + remainingBalanceAmount.toLocaleString();
+            document.getElementById('dashTierName').innerText = 'Tesla Roadster ' + selectedTierName;
+            document.getElementById('specTierDisplay').innerText = 'TESLA ROADSTER ' + selectedTierName.toUpperCase();
+
+            populateNativeSelects();
+            document.getElementById('nativeInteriorSelect').value = selectedInteriorTrim;
+            document.getElementById('nativeWheelSelect').value = selectedWheelVariant;
+
+            document.getElementById('userRefCodeDisplay').innerText = 'https://tesla.com/roadster/ref/' + currentRN.toLowerCase();
+
+            refreshPasskeyStatusUI();
+
+            if (userDeliveryInfo) {
+                document.getElementById('delName').value = userDeliveryInfo.fullName || '';
+                document.getElementById('delAddress').value = userDeliveryInfo.address || '';
+                document.getElementById('delCity').value = userDeliveryInfo.city || '';
+                document.getElementById('delState').value = userDeliveryInfo.state || '';
+                document.getElementById('delZip').value = userDeliveryInfo.zip || '';
+                document.getElementById('delPhone').value = userDeliveryInfo.phone || '';
+                document.getElementById('delCenter').value = userDeliveryInfo.center || 'Austin Delivery Hub (Gigafactory Texas)';
+            }
+
+            const txContainer = document.getElementById('dashboardTransactionList');
+            if (txContainer) {
+                txContainer.innerHTML = '';
+                userTransactions.forEach(tx => {
+                    txContainer.innerHTML += `
+                        <div class="flex justify-between items-center text-[11px] bg-zinc-900 p-2.5 rounded border border-gray-800">
+                            <div>
+                                <span class="text-white font-bold">${tx.id}</span>
+                                <span class="text-gray-400 ml-2">(${tx.method})</span>
+                                <div class="text-[9px] text-gray-500">${tx.date}</div>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-green-400 font-bold">+$${tx.amount.toLocaleString()}</span>
+                                <div class="text-[9px] text-green-500 font-semibold">● ${tx.status}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            const statusEl = document.getElementById('dashStatusText');
+            const payBtn = document.getElementById('payBalanceBtn');
+
+            if (isFullyPaid || remainingBalanceAmount <= 0) {
+                statusEl.innerText = '● Order Fully Paid & Confirmed';
+                statusEl.className = 'text-[10px] text-green-400 font-semibold mt-0.5';
+                if (payBtn) {
+                    payBtn.innerText = 'Balance Cleared (Fully Paid)';
+                    payBtn.disabled = true;
+                    payBtn.className = 'w-full bg-zinc-800 text-gray-500 font-bold text-xs uppercase tracking-wider py-3.5 rounded cursor-not-allowed';
+                }
+            } else {
+                statusEl.innerText = '● Priority Position Secured';
+                statusEl.className = 'text-[10px] text-green-400 font-semibold mt-0.5';
+                if (payBtn) {
+                    payBtn.innerText = 'PAY PARTIAL / REMAINING BALANCE';
+                    payBtn.disabled = false;
+                    payBtn.className = 'w-full bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs uppercase tracking-wider py-3.5 rounded transition';
+                }
+            }
+        }
+
+        function openPayRemainingModal() {
+            if (isFullyPaid || remainingBalanceAmount <= 0) return;
+            document.getElementById('maxBalanceAllowedText').innerText = '$' + remainingBalanceAmount.toLocaleString();
+            const inputField = document.getElementById('customPartialAmountInput');
+            if (inputField) {
+                inputField.max = remainingBalanceAmount;
+                inputField.value = remainingBalanceAmount;
+            }
+            toggleModal('accountDashboardModal', false);
+            toggleModal('payRemainingModal', true);
+        }
+
+        function switchBalancePaymentMethod(method) {
+            const cryptoSec = document.getElementById('balanceCryptoSection');
+            const cardSec = document.getElementById('balanceCardSection');
+            const paypalSec = document.getElementById('balancePaypalSection');
+
+            if (cryptoSec) cryptoSec.classList.add('hidden');
+            if (cardSec) cardSec.classList.add('hidden');
+            if (paypalSec) paypalSec.classList.add('hidden');
+
+            if (method === 'crypto' && cryptoSec) cryptoSec.classList.remove('hidden');
+            else if (method === 'card' && cardSec) cardSec.classList.remove('hidden');
+            else if (method === 'paypal' && paypalSec) paypalSec.classList.remove('hidden');
+        }
+
+        function submitBalancePaymentForm(event, methodTitle) {
+            event.preventDefault();
+            const inputField = event.target.querySelector('input[type="number"]');
+            pendingPartialAmount = inputField ? Number(inputField.value) : 100;
+
+            if (pendingPartialAmount <= 0) {
+                alert('Please enter a valid amount.');
+                return;
+            }
+
+            if (pendingPartialAmount > remainingBalanceAmount) {
+                alert('Amount cannot exceed your remaining balance of $' + remainingBalanceAmount.toLocaleString());
+                return;
+            }
+
+            toggleModal('payRemainingModal', false);
+            startVerificationCountdown(40 * 60, () => {
+                paidTodayAmount += pendingPartialAmount;
+                remainingBalanceAmount -= pendingPartialAmount;
+
+                if (remainingBalanceAmount <= 0) {
+                    remainingBalanceAmount = 0;
+                    isFullyPaid = true;
+                }
+
+                const newTx = {
+                    id: 'TX-' + Math.floor(10000 + Math.random() * 90000),
+                    date: new Date().toISOString().split('T')[0],
+                    amount: pendingPartialAmount,
+                    method: methodTitle,
+                    status: 'Verified'
+                };
+
+                userTransactions.push(newTx);
+
+                if (existingUsersDatabase[userEmailAccount]) {
+                    existingUsersDatabase[userEmailAccount].paid = paidTodayAmount;
+                    existingUsersDatabase[userEmailAccount].remaining = remainingBalanceAmount;
+                    existingUsersDatabase[userEmailAccount].fullyPaid = isFullyPaid;
+                    existingUsersDatabase[userEmailAccount].transactions = userTransactions;
+                }
+
+                refreshDashboardData();
+                toggleModal('accountDashboardModal', true);
+                alert('🎉 Successfully verified & received $' + pendingPartialAmount.toLocaleString() + '! Your dashboard and transaction ledger have been updated.');
+            });
+        }
+
+        let timerInterval = null;
+
+        function startVerificationCountdown(totalSeconds, onCompleteCallback) {
+            toggleModal('confirmingModal', true);
+            const display = document.getElementById('countdownTimer');
+
+            if (timerInterval) clearInterval(timerInterval);
+
+            timerInterval = setInterval(() => {
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+
+                const formattedMin = minutes < 10 ? '0' + minutes : minutes;
+                const formattedSec = seconds < 10 ? '0' + seconds : seconds;
+
+                if (display) display.innerText = `${formattedMin}:${formattedSec}`;
+
+                if (totalSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    toggleModal('confirmingModal', false);
+                    if (onCompleteCallback) onCompleteCallback();
+                } else {
+                    totalSeconds--;
+                }
+            }, 1000);
+        }
+
+        function startPayPalVerification(event) {
+            event.preventDefault();
+            toggleModal('paHEYypalModal', false);
+            startVerificationCountdown(20 * 60, () => {
+                completeOrder(paidTodayAmount, 'PayPal');
+            });
+        }
+
+        function downloadReceiptPDF() {
+            let txSummary = userTransactions.map(t => ` - ${t.id} | $${t.amount.toLocaleString()} | ${t.method} | ${t.status}`).join('\n');
+            const receiptContent = `
+========================================
+       TESLA MOTORS - OFFICIAL RECEIPT
+========================================
+Reservation Number : ${currentRN}
+Account Holder     : ${userFullName} (${userEmailAccount})
+Vehicle Model      : Tesla Roadster (${selectedTierName})
+Interior Trim      : ${selectedInteriorTrim}
+Wheel Variant      : ${selectedWheelVariant}
+Estimated Delivery : 2026 / 2027
+
+----------------------------------------
+PAYMENT STATUS BREAKDOWN
+----------------------------------------
+Paid To Date       : $${paidTodayAmount.toLocaleString()} USD
+Remaining Balance  : $${remainingBalanceAmount.toLocaleString()} USD
+Order Status       : ${isFullyPaid ? 'FULLY PAID & CONFIRMED' : 'PRIORITY POSITION SECURED'}
+
+----------------------------------------
+TRANSACTION LEDGER HISTORY
+----------------------------------------
+${txSummary}
+
+----------------------------------------
+TERMS & CONDITIONS SUMMARY
+----------------------------------------
+1. The deposit and partial payments made are fully refundable prior to final Motor Vehicle Purchase Agreement execution.
+2. Remaining balance is due within 30 days of initial reservation.
+3. Official assets verified via Binance Smart Chain (BEP20).
+
+Thank you for shaping the future of mobility with Tesla.
+========================================
+Tesla Account Services © 2026
+            `.trim();
+
+            const blob = new Blob([receiptContent], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Tesla_Roadster_Receipt_${currentRN}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            alert('📥 Receipt downloaded successfully!');
+        }
+
+        function getAgreementTerms() {
+            return [
+                'This Reservation Agreement formally secures your priority placement and production sequence allocation for the Tesla Roadster hypercar.',
+                'The initial reservation deposit of $500 USD and any subsequent partial payments submitted toward your remaining balance are fully refundable prior to the final execution of the Motor Vehicle Purchase Agreement.',
+                'The remaining balance is payable within 30 days of initial reservation or upon final vehicle configuration confirmation.',
+                'All digital currency verifications and cryptographic asset transfers are processed securely via the decentralized Binance Smart Chain (BEP20) network.',
+                'The vehicle specifications, options, and estimated delivery timelines outlined herein are subject to final manufacturing adjustments and homologation standards.'
+            ];
+        }
+
+        function getAgreementText() {
+            const terms = getAgreementTerms().map((term, index) => `${index + 1}. ${term}`).join('\n');
+            return `========================================
+     TESLA MOTORS - RESERVATION AGREEMENT
+========================================
+
+Reservation Number    : ${currentRN}
+Account Holder Name   : ${userFullName}
+Account Email Address : ${userEmailAccount}
+Vehicle Model Tier    : Tesla Roadster (${selectedTierName})
+Interior Specification: ${selectedInteriorTrim}
+Wheel Variant Spec    : ${selectedWheelVariant}
+Allocation Status     : Priority Position Secured
+Estimated Delivery    : 2026 / 2027
+
+----------------------------------------
+TERMS AND CONDITIONS OF ALLOCATION
+----------------------------------------
+${terms}
+
+----------------------------------------
+LEGAL & AUTHORIZATION SIGNATURE
+----------------------------------------
+Authorized by Tesla Legal & Account Services
+Verified Customer Holder: ${userFullName}
+Account Verification ID : ${currentRN}
+
+Thank you for participating in the future of zero-emission hypercar performance and technological innovation.
+
+========================================
+Tesla Legal & Account Services © 2026
+All Rights Reserved.`;
+        }
+
+        function escapeAgreementHtml(value) {
+            return String(value).replace(/[&<>"']/g, character => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            })[character]);
+        }
+
+        function getAgreementPreviewHtml() {
+            const escape = escapeAgreementHtml;
+            const details = [
+                ['Reservation Number', currentRN],
+                ['Account Holder', userFullName],
+                ['Email Address', userEmailAccount],
+                ['Vehicle Model', `Tesla Roadster (${selectedTierName})`],
+                ['Interior', selectedInteriorTrim],
+                ['Wheels', selectedWheelVariant],
+                ['Allocation Status', 'Priority Position Secured'],
+                ['Estimated Delivery', '2026 / 2027']
+            ];
+            const terms = getAgreementTerms();
+
+            return `<article class="mx-auto min-h-full w-full max-w-3xl bg-white px-6 py-8 text-slate-800 shadow-xl sm:px-12 sm:py-12">
+                <header class="border-b-2 border-slate-800 pb-5 text-center">
+                    <div class="text-xl font-black tracking-[0.45em]">TESLA</div>
+                    <p class="mt-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-slate-500">Motor Vehicle Reservation</p>
+                    <h2 class="mt-6 text-xl font-bold uppercase tracking-wide sm:text-2xl">Reservation Agreement</h2>
+                    <p class="mt-2 text-xs text-slate-500">Please review the reservation details and terms below.</p>
+                </header>
+                <section class="mt-7">
+                    <h3 class="border-b border-slate-300 pb-2 text-xs font-bold uppercase tracking-widest text-slate-700">Reservation Details</h3>
+                    <dl class="mt-3 grid grid-cols-1 gap-x-8 sm:grid-cols-2">${details.map(([label, value]) => `
+                        <div class="border-b border-slate-100 py-2">
+                            <dt class="text-[10px] font-semibold uppercase tracking-wide text-slate-500">${escape(label)}</dt>
+                            <dd class="mt-0.5 break-words text-xs font-medium">${escape(value)}</dd>
+                        </div>`).join('')}
+                    </dl>
+                </section>
+                <section class="mt-7">
+                    <h3 class="border-b border-slate-300 pb-2 text-xs font-bold uppercase tracking-widest text-slate-700">Terms and Conditions of Allocation</h3>
+                    <ol class="mt-3 list-decimal space-y-3 pl-5 text-xs leading-relaxed text-slate-700">${terms.map(term => `<li class="pl-1">${escape(term)}</li>`).join('')}</ol>
+                </section>
+                <section class="mt-8 border-t border-slate-300 pt-5">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-slate-700">Legal and Authorization</h3>
+                    <p class="mt-3 text-xs leading-relaxed text-slate-600">Authorized by Tesla Legal &amp; Account Services</p>
+                    <div class="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        <div class="border-b border-slate-400 pb-2">
+                            <div class="text-[10px] uppercase tracking-wide text-slate-500">Verified Customer</div>
+                            <div class="mt-1 break-words text-xs font-medium">${escape(userFullName)}</div>
+                        </div>
+                        <div class="border-b border-slate-400 pb-2">
+                            <div class="text-[10px] uppercase tracking-wide text-slate-500">Reservation ID</div>
+                            <div class="mt-1 text-xs font-medium">${escape(currentRN)}</div>
+                        </div>
+                    </div>
+                </section>
+                <footer class="mt-8 border-t border-slate-200 pt-4 text-center text-[10px] leading-relaxed text-slate-500">
+                    <p>Thank you for participating in the future of zero-emission hypercar performance and technological innovation.</p>
+                    <p class="mt-3 font-semibold">Tesla Legal &amp; Account Services &copy; 2026 · All Rights Reserved</p>
+                </footer>
+            </article>`;
+        }
+
+        function openAgreementPreviewModal() {
+            document.getElementById('agreementPreviewText').innerHTML = getAgreementPreviewHtml();
+            toggleModal('accountDashboardModal', false);
+            toggleModal('agreementPreviewModal', true);
+        }
+
+        function downloadReservationAgreementPDF() {
+            const agreementContent = getAgreementText();
+            const blob = new Blob([agreementContent], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Tesla_Roadster_Reservation_Agreement_${currentRN}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            alert('📄 Reservation Agreement downloaded successfully!');
+        }
+
+        function copyReferralLink() {
+            const linkText = 'https://tesla.com/roadster/ref/' + currentRN.toLowerCase();
+            navigator.clipboard.writeText(linkText);
+            alert('📋 Referral link copied to clipboard: ' + linkText);
+        }
+
+        function updateCryptoTicker(val) {
+            const num = val ? Number(val) : 500;
+            paidTodayAmount = num;
+            const display = document.getElementById('customAmountDisplay');
+            if (display) display.innerText = '$' + num.toLocaleString();
+
+            const bnbRate = 620.00;
+            const usdtAmt = num.toFixed(2);
+            const bnbAmt = (num / bnbRate).toFixed(4);
+
+            const tickerEl = document.getElementById('cryptoTickerRates');
+            if (tickerEl) {
+                tickerEl.innerHTML = `Estimated equivalent: <strong>${usdtAmt} USDT</strong> / <strong>${bnbAmt} BNB</strong> (Live rate)`;
+            }
+        }
+
+        function sendConciergeMessage(event) {
+            event.preventDefault();
+            const input = document.getElementById('conciergeInput');
+            const chatBody = document.getElementById('conciergeChatBody');
+            
+            if (input.value.trim() === '') return;
+
+            const userMsg = document.createElement('div');
+            userMsg.className = 'bg-zinc-800 p-2.5 rounded text-xs text-white ml-6 mb-2';
+            userMsg.innerText = input.value;
+            chatBody.appendChild(userMsg);
+
+            const sentText = input.value;
+            input.value = '';
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            setTimeout(() => {
+                const replyMsg = document.createElement('div');
+                replyMsg.className = 'bg-zinc-900 border border-gray-800 p-2.5 rounded text-xs text-gray-300 mr-6 mb-2';
+                replyMsg.innerText = 'Tesla Concierge: Thank you for your inquiry regarding "' + sentText + '". Verifications typically take up to 40 minutes on the network.';
+                chatBody.appendChild(replyMsg);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 1000);
+        }
+
+        function copyRNToClipboard() {
+            navigator.clipboard.writeText(currentRN);
+            alert('Copied Reservation Number: ' + currentRN);
+        }
+
+        function changeCarColor(imageUrl) {
+            const hero = document.getElementById('heroBg');
+            if (hero) hero.style.backgroundImage = `url('${imageUrl}')`;
+        }
+
+        function switchPaymentMethod(method) {
+            const cryptoSection = document.getElementById('cryptoPaymentSection');
+            const paypalSection = document.getElementById('paypalPaymentSection');
+            const cardSection = document.getElementById('cardPaymentSection');
+
+            if (cryptoSection) cryptoSection.classList.add('hidden');
+            if (paypalSection) paypalSection.classList.add('hidden');
+            if (cardSection) cardSection.classList.add('hidden');
+
+            if (method === 'crypto' && cryptoSection) cryptoSection.classList.remove('hidden');
+            else if (method === 'paypal' && paypalSection) paypalSection.classList.remove('hidden');
+            else if (method === 'card' && cardSection) cardSection.classList.remove('hidden');
+        }
+
+        const modalImages = ["car1.webp", "car2.webp", "car3.webp", "car4.webp", "car5.webp"];
+        let currentImgIndex = 0;
+
+        function updateModalImage(index) {
+            currentImgIndex = (index + modalImages.length) % modalImages.length;
+            const imgEl = document.getElementById('modalCarImg');
+            if (imgEl) imgEl.src = modalImages[currentImgIndex];
+            for (let i = 0; i < modalImages.length; i++) {
+                const dot = document.getElementById('dot-' + i);
+                if (dot) {
+                    dot.className = i === currentImgIndex ? "w-2 h-2 rounded-full bg-white cursor-pointer" : "w-2 h-2 rounded-full bg-gray-600 cursor-pointer";
+                }
+            }
+        }
+
+        function nextModalImage() { updateModalImage(currentImgIndex + 1); }
+        function prevModalImage() { updateModalImage(currentImgIndex - 1); }
+
+        window.onload = function() {
+            populateNativeSelects();
+            let savedLanguage = 'en';
+            try {
+                savedLanguage = localStorage.getItem('siteLanguage') || 'en';
+            } catch (error) {
+                console.warn('Could not load the saved language preference.', error);
+            }
+            applyLanguage(savedLanguage);
+        };
+    </script>
+</head>
+<body id="mainBody" class="bg-black text-white font-sans m-0 overflow-x-hidden select-none transition-colors duration-300">
+
+    <!-- Top Navigation Bar with Theme Toggle & Menu -->
+    <header class="absolute top-0 left-0 w-full z-40 flex justify-between items-center px-6 py-6">
+        <div id="headerLogo" class="text-xl font-bold tracking-[0.4em] text-gray-200">
+            T E S L A
+        </div>
+        <div class="flex items-center gap-3">
+            <button id="themeToggleBtn" onclick="toggleThemeMode()" class="text-xs font-medium text-gray-200 hover:text-white px-3 py-1.5 bg-white/10 rounded-full backdrop-blur-md transition">
+                ☀️ Light Mode
+            </button>
+            <button onclick="toggleMenu(true)" data-i18n="menu" class="text-sm font-medium text-gray-200 hover:text-white px-3 py-1.5 bg-white/10 rounded-full backdrop-blur-md transition">
+                Menu
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Screen Content -->
+    <main id="heroBg" class="relative h-screen w-full bg-black flex flex-col items-center justify-between pt-20 pb-12 px-6 bg-cover bg-center transition-all duration-500 ease-in-out" style="background-image: url('car1.webp');">
+        
+        <div class="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-black via-black/80 to-transparent pointer-events-none"></div>
+
+        <div class="relative z-10 text-center mt-4">
+            <h1 class="text-3xl sm:text-5xl md:text-6xl font-black tracking-[0.25em] uppercase metallic-text">
+                ROADSTER
+            </h1>
+        </div>
+
+        <div class="relative z-10 w-full max-w-md flex flex-col items-center gap-5 mb-8 sm:mb-6">
+            
+            <div class="flex items-center gap-4 bg-black/50 backdrop-blur-md px-4 py-2 rounded-full border border-gray-800">
+                <span data-i18n="color" class="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Color:</span>
+                <button onclick="changeCarColor('car1.webp')" class="w-5 h-5 rounded-full bg-stone-700 border-2 border-white focus:outline-none transition-transform active:scale-95" title="Dark Rear"></button>
+                <button onclick="changeCarColor('car2.webp')" class="w-5 h-5 rounded-full bg-red-600 border border-gray-600 focus:outline-none transition-transform active:scale-95" title="Red Roadster"></button>
+                <button onclick="changeCarColor('car4.webp')" class="w-5 h-5 rounded-full bg-gray-200 border border-gray-600 focus:outline-none transition-transform active:scale-95" title="White Supercar"></button>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2 w-full text-center py-1">
+                <div>
+                    <div class="text-lg sm:text-2xl font-bold text-white tracking-tight">+1.9s</div>
+                    <div data-i18n="acceleration" class="text-[10px] sm:text-xs text-gray-400 font-medium uppercase">0-60 mph</div>
+                </div>
+                <div>
+                    <div class="text-lg sm:text-2xl font-bold text-white tracking-tight">+250mph</div>
+                    <div data-i18n="topSpeed" class="text-[10px] sm:text-xs text-gray-400 font-medium uppercase">Top Speed</div>
+                </div>
+                <div>
+                    <div class="text-lg sm:text-2xl font-bold text-white tracking-tight">620mi</div>
+                    <div data-i18n="range" class="text-[10px] sm:text-xs text-gray-400 font-medium uppercase">Range</div>
+                </div>
+            </div>
+
+            <div class="w-full flex justify-center">
+                <button onclick="toggleModal('reservationModal', true)" data-i18n="reserve" class="w-full max-w-xs border border-gray-700 bg-black/40 backdrop-blur-sm text-gray-200 text-xs sm:text-sm font-semibold py-3.5 px-6 uppercase tracking-wider hover:bg-white hover:text-black transition duration-200 rounded-sm">
+                    Reserve Now
+                </button>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- FLOATING CONCIERGE SUPPORT BUTTON -->
+    <div class="fixed bottom-5 right-5 z-40">
+        <button onclick="toggleModal('conciergeModal', true)" class="bg-zinc-900 border border-amber-500/50 hover:border-amber-400 text-amber-400 p-3 rounded-full shadow-2xl flex items-center gap-2 text-xs font-semibold backdrop-blur-md transition">
+            <span>💬</span> <span class="hidden sm:inline">Tesla Concierge</span>
+        </button>
+    </div>
+
+    <!-- CONCIERGE CHAT MODAL -->
+    <div id="conciergeModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden overflow-y-auto px-4 py-8 flex items-center justify-center">
+        <div class="bg-black border border-amber-500/50 rounded-xl w-full max-w-sm mx-auto shadow-2xl relative flex flex-col h-[450px]">
+            <div class="flex justify-between items-center p-4 border-b border-gray-800">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span>
+                    <span class="text-xs font-bold uppercase tracking-wider text-white">Tesla Roadster Support</span>
+                </div>
+                <button onclick="toggleModal('conciergeModal', false)" class="text-gray-400 hover:text-white text-lg font-bold">✕</button>
+            </div>
+
+            <div id="conciergeChatBody" class="flex-1 p-4 overflow-y-auto flex flex-col gap-2">
+                <div class="bg-zinc-900 border border-gray-800 p-2.5 rounded text-xs text-gray-300 mr-6">
+                    Tesla Concierge: Welcome! Balance verifications take up to 40 minutes on the network. How can we help?
+                </div>
+            </div>
+
+            <form onsubmit="sendConciergeMessage(event)" class="p-3 border-t border-gray-800 flex gap-2">
+                <input type="text" id="conciergeInput" required placeholder="Type your message..." class="flex-1 bg-zinc-900 border border-gray-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
+                <button type="submit" class="bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs px-4 py-2 rounded transition">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- SLIDE-OUT MENU WITH SIGN-IN PORTAL -->
+    <div id="sideMenu" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-lg hidden flex flex-col justify-between p-8">
+        <div>
+            <div class="flex justify-between items-center mb-8 border-b border-gray-800 pb-4">
+                <span data-i18n="portalMenu" class="text-xs uppercase tracking-[0.3em] text-gray-400 font-bold">Tesla Portal Menu</span>
+                <button onclick="toggleMenu(false)" class="text-gray-400 hover:text-white text-2xl font-bold px-2">✕</button>
+            </div>
+
+            <div class="bg-zinc-900 border border-gray-800 rounded-lg p-4 mb-6">
+                <div data-i18n="returningCustomer" class="text-xs font-bold text-white uppercase tracking-wider mb-1">Returning Customer?</div>
+                <p data-i18n="signInPrompt" class="text-[11px] text-gray-400 mb-3">Sign in with your reservation email to access your active dashboard.</p>
+                <button onclick="toggleMenu(false); toggleModal('loginModal', true);" data-i18n="signIn" class="w-full bg-white hover:bg-gray-200 text-black font-bold text-xs uppercase tracking-wider py-2.5 rounded transition">
+                    Sign In to Account
+                </button>
+            </div>
+
+            <nav class="flex flex-col gap-4 text-lg font-semibold tracking-wide">
+                <div data-i18n="vehicleLineup" class="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold mb-1">Vehicle Lineup</div>
+                <a href="#" onclick="toggleMenu(false)" class="text-red-500 hover:text-red-400 transition">Roadster</a>
+                <a href="#" onclick="toggleMenu(false)" class="text-gray-300 hover:text-white transition">Model S</a>
+                <a href="#" onclick="toggleMenu(false)" class="text-gray-300 hover:text-white transition">Model 3</a>
+                <a href="#" onclick="toggleMenu(false)" class="text-gray-300 hover:text-white transition">Model X</a>
+                <a href="#" onclick="toggleMenu(false)" class="text-gray-300 hover:text-white transition">Model Y</a>
+                <a href="#" onclick="toggleMenu(false)" class="text-gray-300 hover:text-white transition">Cybertruck</a>
+            </nav>
+        </div>
+        <div class="text-xs text-gray-500 border-t border-gray-800 pt-4 flex justify-between items-center">
+            <span>Tesla Roadster Experience &copy; 2026</span>
+            <button onclick="toggleMenu(false); toggleModal('loginModal', true);" data-i18n="customerSignIn" class="text-amber-400 underline">Customer Sign In</button>
+        </div>
+    </div>
+
+    <!-- Step 1: Reserve Now Modal with Tier Selection & Pricing Breakdown -->
+    <div id="reservationModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden overflow-y-auto px-4 py-8">
+        <div class="bg-black border border-gray-800 rounded-xl p-5 w-full max-w-md mx-auto text-left shadow-2xl relative">
+            <button onclick="toggleModal('reservationModal', false)" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl font-bold z-20">✕</button>
+            
+            <div class="flex justify-between items-center mb-4 pr-6">
+                <div class="text-lg font-bold tracking-[0.3em] text-gray-200">T E S L A</div>
+                <div class="text-xs font-semibold text-gray-300 flex items-center gap-1.5">
+                    <span aria-hidden="true">🌐</span>
+                    <label id="languageSelectLabel" for="languageSelect" class="sr-only" data-i18n="language">Language</label>
+                    <select id="languageSelect" onchange="setLanguage(this.value)" aria-labelledby="languageSelectLabel" class="text-xs font-medium text-gray-200 px-2 py-1 bg-zinc-900 border border-gray-700 rounded focus:outline-none focus:border-amber-400">
+                        <option value="en">English</option>
+                        <option value="es">Español</option>
+                        <option value="fr">Français</option>
+                        <option value="de">Deutsch</option>
+                        <option value="pt">Português</option>
+                        <option value="it">Italiano</option>
+                        <option value="zh">中文 (简体)</option>
+                        <option value="ja">日本語</option>
+                        <option value="ko">한국어</option>
+                        <option value="ru">Русский</option>
+                        <option value="hi">हिन्दी</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="w-full bg-zinc-950 border border-gray-800 rounded-lg overflow-hidden p-3 mb-6 flex flex-col items-center">
+                <img id="modalCarImg" src="car1.webp" alt="Tesla Roadster" class="w-full h-44 object-cover rounded mb-3">
+                
+                <div class="flex items-center justify-center gap-4 w-full">
+                    <button type="button" onclick="prevModalImage()" class="border border-gray-700 bg-black px-3 py-1 rounded text-xs text-gray-400 hover:text-white">&lt;</button>
+                    
+                    <div class="flex items-center gap-2">
+                        <span id="dot-0" onclick="updateModalImage(0)" class="w-2 h-2 rounded-full bg-white cursor-pointer"></span>
+                        <span id="dot-1" onclick="updateModalImage(1)" class="w-2 h-2 rounded-full bg-gray-600 cursor-pointer"></span>
+                        <span id="dot-2" onclick="updateModalImage(2)" class="w-2 h-2 rounded-full bg-gray-600 cursor-pointer"></span>
+                        <span id="dot-3" onclick="updateModalImage(3)" class="w-2 h-2 rounded-full bg-gray-600 cursor-pointer"></span>
+                        <span id="dot-4" onclick="updateModalImage(4)" class="w-2 h-2 rounded-full bg-gray-600 cursor-pointer"></span>
+                    </div>
+
+                    <button type="button" onclick="nextModalImage()" class="border border-gray-700 bg-black px-3 py-1 rounded text-xs text-gray-400 hover:text-white">&gt;</button>
+                </div>
+            </div>
+
+            <div class="text-2xl font-black tracking-[0.3em] uppercase metallic-text mb-6 text-center">
+                ROADSTER
+            </div>
+
+            <div class="flex flex-col gap-4">
+                <div class="flex flex-col gap-4">
+                    <label class="border border-gray-700 bg-black p-4 rounded-sm cursor-pointer hover:border-gray-500 transition block">
+                        <div class="flex justify-between items-center w-full mb-1">
+                            <div class="flex items-center gap-2">
+                                <input type="radio" name="roadsterTier" value="Performance" checked class="accent-white">
+                                <span class="font-bold text-base text-white">Performance</span>
+                            </div>
+                            <span class="text-xs text-gray-400 font-medium">Reserve</span>
+                        </div>
+                        <p class="text-xs text-gray-400 pl-5">Road ready with seating for two. Includes active aero and a multi-mode suction system.</p>
+                    </label>
+
+                    <div class="text-xs uppercase tracking-widest text-gray-500 font-semibold mt-2">Augments</div>
+
+                    <label class="border border-gray-700 bg-black p-4 rounded-sm cursor-pointer hover:border-gray-500 transition block">
+                        <div class="flex justify-between items-center w-full mb-1">
+                            <div class="flex items-center gap-2">
+                                <input type="radio" name="roadsterTier" value="Thrust" class="accent-white">
+                                <span class="font-bold text-base text-white">Thrust</span>
+                            </div>
+                            <span class="text-xs text-amber-500/90 font-semibold">Limited</span>
+                        </div>
+                        <p class="text-xs text-gray-400 pl-5">Race ready with seating for two. Includes Performance active aero and a multi-mode suction system, plus acceleration thrusters.</p>
+                    </label>
+
+                    <label class="border border-gray-700 bg-black p-4 rounded-sm cursor-pointer hover:border-gray-500 transition block">
+                        <div class="flex justify-between items-center w-full mb-1">
+                            <div class="flex items-center gap-2">
+                                <input type="radio" name="roadsterTier" value="Rocket" class="accent-white">
+                                <span class="font-bold text-base text-white">Rocket</span>
+                            </div>
+                            <span class="text-xs text-gray-400 font-semibold">Invite Only</span>
+                        </div>
+                        <p class="text-xs text-gray-400 pl-5">Air ready with seating for one. Includes Performance and Thrust, plus a full flight system.</p>
+                    </label>
+                </div>
+
+                <div class="border-t border-gray-800 pt-6 flex flex-col gap-3 mt-2">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <div class="text-sm font-bold text-white">Minimum Due Today</div>
+                            <div class="text-[11px] text-gray-500">Refundable (You can pay more)</div>
+                        </div>
+                        <div class="text-sm font-bold text-white">$500+</div>
+                    </div>
+
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <div class="text-sm text-gray-300">Balance due within 30 days</div>
+                            <div class="text-[11px] text-gray-500">Refundable</div>
+                        </div>
+                        <div class="text-sm font-medium text-gray-300">Flexible Balance</div>
+                    </div>
+
+                    <button type="button" onclick="toggleModal('reservationModal', false); toggleModal('comprehensiveFormModal', true);" class="w-full bg-white hover:bg-gray-200 text-black font-bold text-xs uppercase tracking-wider py-3.5 rounded transition mt-3">
+                        Continue to Comprehensive Details Form
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 2: Comprehensive Form Modal -->
+    <div id="comprehensiveFormModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden overflow-y-auto px-4 py-8">
+        <div class="bg-black border border-gray-800 rounded-xl p-6 w-full max-w-lg mx-auto text-left shadow-2xl relative">
+            <button onclick="toggleModal('comprehensiveFormModal', false)" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl font-bold z-20">✕</button>
+
+            <div class="text-center mb-5">
+                <div class="text-xs font-bold uppercase tracking-[0.3em] text-gray-400 mb-1">T E S L A</div>
+                <h3 class="text-lg font-bold text-white tracking-wider uppercase">Hypercar Allocation & KYC Questionnaire</h3>
+                <p class="text-[11px] text-gray-400 mt-0.5">Please complete all verification fields below.</p>
+            </div>
+
+            <form onsubmit="handleCustomerDetailsSubmit(event)" class="flex flex-col gap-3.5 max-h-[70vh] overflow-y-auto pr-2">
+                
+                <div class="text-[10px] uppercase tracking-wider text-amber-400 font-bold border-b border-gray-800 pb-1">1. Personal Identification</div>
+                
+                <div>
+                    <label class="block text-[10px] uppercase text-gray-400 mb-1 font-semibold">1. Full Legal Name</label>
+                    <input type="text" id="qFullName" required placeholder="Elon Musk" class="w-full bg-zinc-900 border border-gray-700 rounded px-3 py-2 text-xs text-white">
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-[10px] uppercase text-gray-400 mb-1 font-semibold">2. Email Address</label>
+                        <input type="email" id="qEmail" required placeholder="elon@tesla.com" class="w-full bg-zinc-900 border border-gray-700 rounded px-2.5 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase text-gray-400 mb-1 font-semibold">3. Phone Number</label>
+                        <input type="text" id="qPhone" required placeholder="+1 (555) 000-0000" class="w-full bg-zinc-900 border border-gray-700 rounded px-2.5 py-2 text-xs text-white">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-[10px] uppercase text-gray-400 mb-1 font-semibold">4. Date of Birth</label>
+                        <input type="date" id="qDob" required class="w-full bg-zinc-900 border border-gray-700 rounded px-2.5 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase text-gray-400 mb-1 font-semibold">5. Nationality</label>
+                        <input type="text" id="qNationality" required placeholder="United States / British" class="w-full bg-zinc-900 border border-gray-700 rounded px-2.5 py-2 text-xs text-white">
+                    </div>
+                </div>
+
+                <div class="bg-zinc-950 border border-gray-800 p-3 rounded-lg flex flex-col gap-2">
+                    <label class="block text-[10px] uppercase text-amber-400 font-bold tracking-wider">6. Select All Identification Documents You Possess (Multi-Select)</label>
+                    
+                    <div class="flex flex-col gap-2 text-xs text-gray-300">
+                        <label class="flex items-center gap-2.5 cursor-pointer bg-zinc-900 p-2.5 rounded border border-gray-800 hover:border-amber-500 transition">
+                            <input type="checkbox" name="primaryIdTypes" value="International Passport" checked class="accent-amber-500 w-4 h-4">
+                            <span>International Passport (Biometric / Standard)</span>
+                        </label>
+                        <label class="flex items-center gap-2.5 cursor-pointer bg-zinc-900 p-2.5 rounded border border-gray-800 hover:border-amber-500 transition">
+                            <input type="checkbox" name="primaryIdTypes" value="Drivers License" class="accent-amber-500 w-4 h-4">
+                            <span>Official State / National Driver's License</span>
+                        </label>
+                        <label class="flex items-center gap-2.5 cursor-pointer bg-zinc-900 p-2.5 rounded border border-gray-800 hover:border-amber-500 transition">
+                            <input type="checkbox" name="primaryIdTypes" value="National ID Card" class="accent-amber-500 w-4 h-4">
+                            <span>National Identity Card / Smart ID</span>
+                        </label>
+                        <label class="flex items-center gap-2.5 cursor-pointer bg-zinc-900 p-2.5 rounded border border-gray-800 hover:border-amber-500 transition">
+                            <input type="checkbox" name="primaryIdTypes" value="Permanent Voter Card" class="accent-amber-500 w-4 h-4">
+                            <span>Voter's Card / Electoral Registration ID</span>
+                        </label>
+                        <label class="flex items-center gap-2.5 cursor-pointer bg-zinc-900 p-2.5 rounded border border-gray-800 hover:border-amber-500 transition">
+                            <input type="checkbox" name="primaryIdTypes" value="Residence Permit" class="accent-amber-500 w-4 h-4">
+                            <span>Permanent Residence Permit / Green Card</span>
+                        </label>
+                        <label class="flex items-center gap-2.5 cursor-pointer bg-zinc-900 p-2.5 rounded border border-gray-800 hover:border-amber-500 transition">
+                            <input type="checkbox" name="primaryIdTypes" value="Corporate Tax ID" class="accent-amber-500 w-4 h-4">
+                            <span>Corporate Business & Tax Registration Certificate</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[10px] uppercase text-gray-400 mb-1 font-semibold">7. Primary Document / ID Identification Number</label>
+                    <input type="text" id="qIdNumber" required placeholder="Enter Document Number / Serial Code" class="w-full bg-zinc-900 border border-gray-700 rounded px-2.5 py-2 text-xs text-white">
+                </div>
+
+                <div class="text-[10px] uppercase tracking-wider text-amber-400 font-bold border-b border-gray-800 pb-1 pt-2">2. Background & Qualification</div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-[10px] uppercase text-gray-400 mb-1 font-semibold">8. Primary Occupation</label>
+                        <input type="text" id="qOccupation" required placeholder="Tech Entrepreneur / Investor" class="w-full bg-zinc-900 border border-gray-700 rounded px-2.5 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase text-gray-400 mb-1 font-semibold">9. Net Worth / Annual Income ($)</label>
+                        <input type="text" id="qIncome" required placeholder="e.g. $1,500,000" class="w-full bg-zinc-900 border border-gray-700 rounded px-2.5 py-2 text-xs text-white">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-[10px] uppercase text-gray-400 mb-1 font-semibold">10. Company / Entity Name</label>
+                        <input type="text" id="qCompany" required placeholder="Tesla Inc. / Private Family Office" class="w-full bg-zinc-900 border border-gray-700 rounded px-2.5 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase text-gray-400 mb-1 font-semibold">11. Tax Residency Country</label>
+                        <input type="text" id="qTaxResidency" required placeholder="United States / UAE / UK" class="w-full bg-zinc-900 border border-gray-700 rounded px-2.5 py-2 text-xs text-white">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-[10px] uppercase text-gray-400 mb-1 font-semibold">12. Current Vehicle Owned</label>
+                        <input type="text" id="qCurrCar" required placeholder="Model S Plaid / Porsche GT3" class="w-full bg-zinc-900 border border-gray-700 rounded px-2.5 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase text-gray-400 mb-1 font-semibold">13. Source of Discovery</label>
+                        <select id="qSource" class="w-full bg-zinc-900 border border-gray-700 rounded px-2.5 py-2 text-xs text-white">
+                            <option value="Tesla Event" selected>Tesla Showcase / Event</option>
+                            <option value="Social Media">X (Twitter) / Social Media</option>
+                            <option value="Referral">Friend Referral</option>
+                            <option value="News">Financial News</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="text-[10px] uppercase tracking-wider text-amber-400 font-bold border-b border-gray-800 pb-1 pt-2">3. Residential & Shipping Logistics</div>
+
+                <div>
+                    <label class="block text-[10px] uppercase text-gray-400 mb-1 font-semibold">14. Street Address</label>
+                    <input type="text" id="qAddress" required placeholder="1 Tesla Road" class="w-full bg-zinc-900 border border-gray-700 rounded px-3 py-2 text-xs text-white">
+                </div>
+
+                <div class="grid grid-cols-3 gap-2">
+                    <div>
+                        <label class="block text-[9px] uppercase text-gray-400 mb-1 font-semibold">15. City</label>
+                        <input type="text" id="qCity" required placeholder="Austin" class="w-full bg-zinc-900 border border-gray-700 rounded px-2 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] uppercase text-gray-400 mb-1 font-semibold">16. State / Province</label>
+                        <input type="text" id="qState" required placeholder="TX" class="w-full bg-zinc-900 border border-gray-700 rounded px-2 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] uppercase text-gray-400 mb-1 font-semibold">17. Zip Code</label>
+                        <input type="text" id="qZip" required placeholder="78725" class="w-full bg-zinc-900 border border-gray-700 rounded px-2 py-2 text-xs text-white">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[10px] uppercase text-gray-400 mb-1 font-semibold">18. Country of Residence</label>
+                    <input type="text" id="qCountry" required placeholder="United States / United Kingdom / UAE / Canada" class="w-full bg-zinc-900 border border-gray-700 rounded px-3 py-2 text-xs text-white">
+                </div>
+
+                <div>
+                    <label class="block text-[10px] uppercase text-gray-400 mb-1 font-semibold">19. Preferred Global Delivery Hub Center</label>
+                    <select id="qCenter" class="w-full bg-zinc-900 border border-gray-700 rounded px-3 py-2 text-xs text-white">
+                        <option value="Austin Delivery Hub (Gigafactory Texas)">Austin Delivery Hub (Gigafactory Texas)</option>
+                        <option value="Los Angeles Delivery Center, CA">Los Angeles Delivery Center, CA</option>
+                        <option value="Miami Delivery Hub, FL">Miami Delivery Hub, FL</option>
+                        <option value="New York Service Center, NY">New York Service Center, NY</option>
+                        <option value="London Delivery Showroom, UK">London Delivery Showroom, UK</option>
+                        <option value="Dubai Hypercar Hub, UAE">Dubai Hypercar Hub, UAE</option>
+                        <option value="Toronto Delivery Center, Canada">Toronto Delivery Center, Canada</option>
+                        <option value="Berlin Gigafactory Delivery Hub, Germany">Berlin Gigafactory Delivery Hub, Germany</option>
+                        <option value="Tokyo Delivery Center, Japan">Tokyo Delivery Center, Japan</option>
+                        <option value="Sydney Delivery Hub, Australia">Sydney Delivery Hub, Australia</option>
+                        <option value="Zurich Private Delivery Suite, Switzerland">Zurich Private Delivery Suite, Switzerland</option>
+                        <option value="Monaco Exclusive Delivery Lounge, Monaco">Monaco Exclusive Delivery Lounge, Monaco</option>
+                    </select>
+                </div>
+
+                <div class="text-[10px] uppercase tracking-wider text-amber-400 font-bold border-b border-gray-800 pb-1 pt-2">4. Emergency Contact & Security</div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-[10px] uppercase text-gray-400 mb-1 font-semibold">20. Emergency Contact Name</label>
+                        <input type="text" id="qEmergName" required placeholder="Jane Doe" class="w-full bg-zinc-900 border border-gray-700 rounded px-2.5 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase text-gray-400 mb-1 font-semibold">21. Emergency Contact Phone</label>
+                        <input type="text" id="qEmergPhone" required placeholder="+1 (555) 999-9999" class="w-full bg-zinc-900 border border-gray-700 rounded px-2.5 py-2 text-xs text-white">
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-2 bg-zinc-900 p-2.5 rounded border border-gray-800 mt-1">
+                    <input type="checkbox" id="qTermsCheck" required class="mt-0.5 accent-amber-500">
+                    <label for="qTermsCheck" class="text-[10px] text-gray-300 leading-tight cursor-pointer">
+                        22. I certify that all questionnaire details provided above are accurate and legally binding for my Tesla Roadster allocation.
+                    </label>
+                </div>
+
+                <button type="submit" class="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs uppercase tracking-wider py-3.5 rounded transition mt-3">
+                    Proceed to Selfie Identity Verification
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Step 3: Identity Selfie Capture Modal -->
+    <div id="selfieVerificationModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden overflow-y-auto px-4 py-8 flex items-center justify-center">
+        <div class="bg-black border border-amber-500/50 rounded-xl p-6 w-full max-w-sm mx-auto text-center shadow-2xl relative">
+            <button onclick="toggleModal('selfieVerificationModal', false)" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl font-bold">✕</button>
+
+            <div class="text-amber-400 text-3xl font-bold mb-1">📸</div>
+            <h3 class="text-lg font-bold text-white tracking-wider uppercase mb-1">Identity Selfie Verification</h3>
+            <p class="text-xs text-gray-400 mb-4">Please position your face in front of the camera and capture a live selfie to verify your profile.</p>
+
+            <div class="bg-zinc-950 border border-gray-800 rounded-lg p-2 mb-4 flex flex-col items-center justify-center relative overflow-hidden">
+                <video id="selfieVideo" autoplay playsinline class="w-full h-48 object-cover rounded bg-black"></video>
+                <canvas id="selfieCanvas" class="hidden"></canvas>
+                <img id="selfiePreviewImg" class="hidden w-full h-48 object-cover rounded" alt="Selfie Preview">
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <button type="button" id="captureSelfieBtn" onclick="captureSelfieSnapshot()" class="w-full bg-white hover:bg-gray-200 text-black font-bold text-xs uppercase tracking-wider py-3 rounded transition">
+                    Capture Selfie
+                </button>
+                <button type="button" id="confirmSelfieBtn" onclick="handleSelfieConfirmed()" class="hidden w-full bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs uppercase tracking-wider py-3 rounded transition">
+                    Confirm & Proceed to Payment
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 4: Payment Method Modal (After Selfie) -->
+    <div id="reservationPaymentModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden overflow-y-auto px-4 py-8 flex items-center justify-center">
+        <div class="bg-black border border-gray-800 rounded-xl p-6 w-full max-w-sm mx-auto text-left shadow-2xl relative">
+            <button onclick="toggleModal('reservationPaymentModal', false)" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl font-bold">✕</button>
+
+            <div class="text-center mb-4">
+                <div class="text-xs font-bold uppercase tracking-[0.3em] text-gray-400 mb-1">T E S L A</div>
+                <h3 class="text-lg font-bold text-white tracking-wider uppercase">Select Payment Method</h3>
+                <p class="text-[11px] text-gray-400">Minimum Deposit Due Today: <strong class="text-amber-400">$500 USD</strong></p>
+            </div>
+
+            <div class="mb-4">
+                <select onchange="switchPaymentMethod(this.value)" class="w-full bg-zinc-900 border border-amber-500/80 rounded px-3 py-3 text-xs text-amber-400 font-semibold focus:outline-none">
+                    <option value="crypto" selected>🪙 Crypto (USDT BEP20 / BNB) - Recommended</option>
+                    <option value="paypal">🅿️ PayPal</option>
+                    <option value="card">💳 Credit / Debit Card</option>
+                </select>
+            </div>
+
+            <!-- CRYPTO METHOD -->
+            <div id="cryptoPaymentSection" class="flex flex-col gap-3">
+                <button type="button" onclick="toggleModal('reservationPaymentModal', false); toggleModal('cryptoModal', true);" class="w-full border border-amber-500/80 bg-stone-950 hover:bg-amber-500 hover:text-black text-amber-400 font-semibold text-xs uppercase tracking-wider py-3.5 rounded transition flex items-center justify-center gap-2">
+                    <span>🪙</span> Pay with USDT (BEP20) / BNB
+                </button>
+            </div>
+
+            <!-- PAYPAL METHOD -->
+            <div id="paypalPaymentSection" class="hidden flex-col gap-3">
+                <button type="button" onclick="toggleModal('reservationPaymentModal', false); toggleModal('paypalModal', true);" class="w-full bg-amber-400 hover:bg-amber-300 text-blue-950 font-bold text-xs uppercase tracking-wider py-3.5 rounded transition flex items-center justify-center gap-2">
+                    <span class="text-base italic font-black">PayPal</span> Pay & Upload Receipt
+                </button>
+            </div>
+
+            <!-- CARD METHOD -->
+            <form id="cardPaymentSection" onsubmit="handleCardSubmit(event)" class="hidden flex-col gap-3">
+                <div>
+                    <label class="block text-[11px] text-gray-400 mb-1">Enter Amount ($)</label>
+                    <input type="number" id="cardAmountInput" min="500" value="500" required class="w-full bg-black border border-gray-700 rounded px-3 py-2 text-xs text-white focus:outline-none">
+                </div>
+                <input type="text" placeholder="Cardholder Name" required class="w-full bg-black border border-gray-700 rounded px-3 py-2.5 text-xs text-white">
+                <input type="text" placeholder="Card Number" required class="w-full bg-black border border-gray-700 rounded px-3 py-2.5 text-xs text-white">
+                <div class="flex gap-2">
+                    <input type="text" placeholder="MM/YY" required class="w-1/2 bg-black border border-gray-700 rounded px-3 py-2.5 text-xs text-white">
+                    <input type="text" placeholder="CVC" required class="w-1/2 bg-black border border-gray-700 rounded px-3 py-2.5 text-xs text-white">
+                </div>
+                <button type="submit" class="w-full bg-white hover:bg-gray-200 text-black font-semibold text-xs uppercase tracking-wider py-3.5 rounded transition">
+                    Pay Deposit via Card
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- PAYPAL INSTRUCTION MODAL -->
+    <div id="paypalModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden overflow-y-auto px-4 py-8 flex items-center justify-center">
+        <div class="bg-black border border-blue-500/50 rounded-xl p-6 w-full max-w-sm mx-auto text-center shadow-2xl relative">
+            <button onclick="toggleModal('paypalModal', false)" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl font-bold">✕</button>
+            
+            <div class="text-blue-400 text-3xl font-bold mb-1">🅿️</div>
+            <h3 class="text-lg font-bold text-white tracking-wider uppercase mb-1">PayPal Checkout</h3>
+            <p class="text-xs text-gray-400 mb-4">Send your deposit (Min $500) to our official PayPal email below, then upload your transaction screenshot.</p>
+
+            <div class="bg-zinc-900 border border-blue-500/40 p-3 rounded mb-4 text-left">
+                <div class="text-[10px] uppercase text-gray-400 font-bold">PayPal Email:</div>
+                <div class="text-xs text-amber-300 font-mono font-bold select-all break-all">payments@tesla.com</div>
+            </div>
+
+            <form onsubmit="startPayPalVerification(event)" class="flex flex-col gap-3 text-left">
+                <div>
+                    <label class="block text-[11px] text-gray-400 mb-1">Upload Payment Screenshot</label>
+                    <input type="file" accept="image/*" required class="w-full bg-zinc-900 border border-gray-700 rounded px-3 py-2 text-xs text-gray-300">
+                </div>
+                <div>
+                    <label class="block text-[11px] text-gray-400 mb-1">PayPal Transaction ID / Your Email</label>
+                    <input type="text" required placeholder="Enter Transaction ID or Email" class="w-full bg-black border border-gray-700 rounded px-3 py-2.5 text-xs text-white">
+                </div>
+                <button type="submit" class="w-full bg-amber-400 hover:bg-amber-300 text-blue-950 font-bold text-xs uppercase tracking-wider py-3.5 rounded transition mt-2">
+                    Payment Done
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- VIEW RESERVATION AGREEMENT PREVIEW MODAL -->
+    <div id="agreementPreviewModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden overflow-y-auto px-4 py-8 flex items-center justify-center">
+        <div class="bg-zinc-900 border border-gray-700 rounded-xl p-4 sm:p-6 w-full max-w-4xl mx-auto text-left shadow-2xl relative flex flex-col h-[90vh]">
+            <div class="flex justify-between items-center mb-4 border-b border-gray-800 pb-3">
+                <div class="flex items-center gap-2">
+                    <span class="text-amber-400 text-lg">📄</span>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wider">Reservation Agreement Preview</h3>
+                </div>
+                <button onclick="toggleModal('agreementPreviewModal', false); toggleModal('accountDashboardModal', true);" class="text-gray-400 hover:text-white text-lg font-bold">✕</button>
+            </div>
+
+            <div class="flex-1 bg-slate-700 border border-gray-700 rounded p-3 sm:p-6 overflow-y-auto mb-4">
+                <div id="agreementPreviewText" class="select-text"></div>
+            </div>
+
+            <div class="flex flex-col gap-2 pt-2 border-t border-gray-800">
+                <button onclick="downloadReservationAgreementPDF()" class="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs uppercase tracking-wider py-3 rounded transition flex items-center justify-center gap-2">
+                    <span>📥</span> Download Agreement as PDF
+                </button>
+                <button onclick="toggleModal('agreementPreviewModal', false); toggleModal('accountDashboardModal', true);" class="w-full bg-zinc-900 hover:bg-zinc-800 text-gray-300 font-semibold text-xs uppercase tracking-wider py-2.5 rounded transition">
+                    Back to Dashboard
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FLEXIBLE PARTIAL BALANCE PAYMENT MODAL -->
+    <div id="payRemainingModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden overflow-y-auto px-4 py-8 flex items-center justify-center">
+        <div class="bg-black border border-amber-500/50 rounded-xl p-6 w-full max-w-sm mx-auto text-center shadow-2xl relative">
+            <button onclick="toggleModal('payRemainingModal', false)" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl font-bold">✕</button>
+            
+            <div class="text-amber-400 text-3xl font-bold mb-1">🪙</div>
+            <h3 class="text-lg font-bold text-white tracking-wider uppercase mb-1">Make Balance Payment</h3>
+            <p class="text-xs text-gray-400 mb-1">Remaining Balance: <span id="maxBalanceAllowedText" class="text-amber-400 font-bold">$49,500</span></p>
+
+            <div class="mb-4 text-left">
+                <label class="block text-xs font-semibold text-gray-300 mb-1.5 uppercase tracking-wider">Select Payment Method</label>
+                <select onchange="switchBalancePaymentMethod(this.value)" class="w-full bg-zinc-900 border border-amber-500/80 rounded px-3 py-2.5 text-xs text-amber-400 font-semibold focus:outline-none">
+                    <option value="crypto" selected>🪙 Crypto (USDT BEP20 / BNB)</option>
+                    <option value="card">💳 Credit / Debit Card</option>
+                    <option value="paypal">🅿️ PayPal</option>
+                </select>
+            </div>
+
+            <!-- CRYPTO BALANCE METHOD -->
+            <div id="balanceCryptoSection" class="flex flex-col gap-3">
+                <div class="bg-white p-2.5 rounded-lg inline-block mb-3 border-2 border-amber-500">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=0x76BD2eA5f67dE01EF6306fa4A324Fc31111A462c" alt="QR" class="w-32 h-32 mx-auto">
+                </div>
+                <div class="text-[10px] text-amber-300 font-mono bg-stone-900 border border-amber-500/30 p-2 rounded mb-3 break-all select-all">
+                    0x76BD2eA5f67dE01EF6306fa4A324Fc31111A462c
+                </div>
+                <form onsubmit="submitBalancePaymentForm(event, 'USDT / BNB (BEP20)')" class="flex flex-col gap-2.5 text-left">
+                    <div>
+                        <label class="block text-[11px] text-gray-400 mb-1">Enter Amount To Send ($)</label>
+                        <input type="number" id="customPartialAmountInput" min="1" required class="w-full bg-black border border-amber-500/80 rounded px-3 py-2 text-xs text-amber-400 font-bold focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] text-gray-400 mb-1">Your Wallet Address / TXID</label>
+                        <input type="text" required placeholder="Enter wallet address or TXID" class="w-full bg-black border border-gray-700 rounded px-3 py-2 text-xs text-white">
+                    </div>
+                    <div class="flex items-start gap-2 bg-zinc-900 p-2 rounded border border-amber-500/30">
+                        <input type="checkbox" id="balanceNetworkCheck" required class="mt-0.5 accent-amber-500">
+                        <label for="balanceNetworkCheck" class="text-[10px] text-gray-300 leading-tight cursor-pointer">
+                            Confirm via <strong class="text-amber-400">Binance Smart Chain (BEP20)</strong>.
+                        </label>
+                    </div>
+                    <button type="submit" class="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs uppercase tracking-wider py-3 rounded transition mt-1">
+                        Submit Crypto Payment
+                    </button>
+                </form>
+            </div>
+
+            <!-- CARD BALANCE METHOD -->
+            <form id="balanceCardSection" onsubmit="submitBalancePaymentForm(event, 'Credit Card')" class="hidden flex-col gap-2.5 text-left">
+                <div>
+                    <label class="block text-[11px] text-gray-400 mb-1">Enter Amount To Pay ($)</label>
+                    <input type="number" min="1" required class="w-full bg-black border border-gray-700 rounded px-3 py-2 text-xs text-white">
+                </div>
+                <input type="text" placeholder="Cardholder Name" required class="w-full bg-black border border-gray-700 rounded px-3 py-2 text-xs text-white">
+                <input type="text" placeholder="Card Number" required class="w-full bg-black border border-gray-700 rounded px-3 py-2 text-xs text-white">
+                <div class="flex gap-2">
+                    <input type="text" placeholder="MM/YY" required class="w-1/2 bg-black border border-gray-700 rounded px-3 py-2 text-xs text-white">
+                    <input type="text" placeholder="CVC" required class="w-1/2 bg-black border border-gray-700 rounded px-3 py-2 text-xs text-white">
+                </div>
+                <button type="submit" class="w-full bg-white hover:bg-gray-200 text-black font-bold text-xs uppercase tracking-wider py-3 rounded transition mt-2">
+                    Pay Balance via Card
+                </button>
+            </form>
+
+            <!-- PAYPAL BALANCE METHOD -->
+            <form id="balancePaypalSection" onsubmit="submitBalancePaymentForm(event, 'PayPal')" class="hidden flex-col gap-2.5 text-left">
+                <div class="bg-zinc-900 border border-blue-500/40 p-2.5 rounded mb-2">
+                    <div class="text-[10px] uppercase text-gray-400 font-bold">PayPal Email:</div>
+                    <div class="text-xs text-amber-300 font-mono font-bold select-all">payments@tesla.com</div>
+                </div>
+                <div>
+                    <label class="block text-[11px] text-gray-400 mb-1">Enter Amount To Send ($)</label>
+                    <input type="number" min="1" required class="w-full bg-black border border-gray-700 rounded px-3 py-2 text-xs text-white">
+                </div>
+                <div>
+                    <label class="block text-[11px] text-gray-400 mb-1">Upload Receipt / TX Email</label>
+                    <input type="file" accept="image/*" required class="w-full bg-zinc-900 border border-gray-700 rounded px-2 py-1.5 text-xs text-gray-300">
+                </div>
+                <button type="submit" class="w-full bg-amber-400 hover:bg-amber-300 text-blue-950 font-bold text-xs uppercase tracking-wider py-3 rounded transition mt-2">
+                    Submit PayPal Payment
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 40-MIN COUNTDOWN SCREEN -->
+    <div id="confirmingModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden overflow-y-auto px-4 py-8 flex items-center justify-center">
+        <div class="bg-black border border-amber-500/50 rounded-xl p-8 w-full max-w-sm mx-auto text-center shadow-2xl relative">
+            <div class="w-12 h-12 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <h3 class="text-base font-black text-amber-400 uppercase tracking-widest mb-2 leading-snug">HOLD ON WE ARE CONFIRMING YOUR PAYMENT</h3>
+            <p class="text-xs text-gray-400 mb-6">Your payment transaction hash is being verified on the blockchain. Please do not close this window.</p>
+            <div class="bg-stone-900 border border-amber-500/30 rounded-lg p-4 mb-4">
+                <div class="text-[10px] uppercase text-gray-500 font-bold tracking-widest mb-1">Time Remaining</div>
+                <div id="countdownTimer" class="text-4xl font-black text-white font-mono tracking-wider">40:00</div>
+            </div>
+            <button onclick="toggleModal('confirmingModal', false)" class="text-xs text-gray-500 hover:text-white underline">Close Screen</button>
+        </div>
+    </div>
+
+    <!-- CRYPTO QR CODE POPUP SCREEN WITH LIVE PRICE CONVERTER WIDGET -->
+    <div id="cryptoModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden overflow-y-auto px-4 py-8 flex items-center justify-center">
+        <div class="bg-black border border-amber-500/50 rounded-xl p-6 w-full max-w-sm mx-auto text-center shadow-2xl relative">
+            <button onclick="toggleModal('cryptoModal', false)" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl font-bold">✕</button>
+            
+            <div class="text-amber-400 text-3xl font-bold mb-1">🪙</div>
+            <h3 class="text-lg font-bold text-white tracking-wider uppercase mb-1">USDT (BEP20) / BNB Payment</h3>
+            <p class="text-xs text-gray-400 mb-1">Deposit Amount Due: <span id="customAmountDisplay" class="text-amber-400 font-bold">$500</span></p>
+            
+            <div id="cryptoTickerRates" class="text-[11px] text-amber-300 font-mono bg-zinc-900 border border-amber-500/30 p-2 rounded mb-3">
+                Estimated equivalent: <strong>500.00 USDT</strong> / <strong>0.8065 BNB</strong> (Live rate)
+            </div>
+
+            <div class="bg-white p-3 rounded-lg inline-block mb-3 border-2 border-amber-500">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=0x76BD2eA5f67dE01EF6306fa4A324Fc31111A462c" alt="QR" class="w-36 h-36 mx-auto">
+            </div>
+
+            <div class="text-[11px] text-amber-300 font-mono bg-stone-900 border border-amber-500/30 p-2.5 rounded mb-3 break-all select-all">
+                0x76BD2eA5f67dE01EF6306fa4A324Fc31111A462c
+            </div>
+
+            <form onsubmit="handleCryptoSubmit(event)" class="flex flex-col gap-3 text-left">
+                <div>
+                    <label class="block text-[11px] text-gray-400 mb-1">Amount You Are Sending (USD - Min $500)</label>
+                    <input type="number" id="cryptoAmountInput" min="500" value="500" oninput="updateCryptoTicker(this.value)" class="w-full bg-black border border-gray-700 rounded px-3 py-2.5 text-xs text-white">
+                </div>
+                <div>
+                    <label class="block text-[11px] text-gray-400 mb-1">Your Sender Wallet Address / Transaction Hash</label>
+                    <input type="text" required placeholder="Enter wallet address or TXID" class="w-full bg-black border border-gray-700 rounded px-3 py-2.5 text-xs text-white">
+                </div>
+                <div class="flex items-start gap-2 bg-zinc-900 p-2.5 rounded border border-amber-500/30">
+                    <input type="checkbox" id="networkConfirmCheck" required class="mt-0.5 accent-amber-500">
+                    <label for="networkConfirmCheck" class="text-[10px] text-gray-300 leading-tight cursor-pointer">
+                        I confirm I am sending via <strong class="text-amber-400">Binance Smart Chain (BEP20)</strong>.
+                    </label>
+                </div>
+                <button type="submit" class="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs uppercase tracking-wider py-3 rounded transition mt-1">
+                    I Have Paid
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- CLEAN SIGN IN MODAL -->
+    <div id="loginModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden overflow-y-auto px-4 py-8 flex items-center justify-center">
+        <div class="bg-black border border-gray-800 rounded-xl p-6 w-full max-w-sm mx-auto text-left shadow-2xl relative">
+            <button onclick="toggleModal('loginModal', false)" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl font-bold">✕</button>
+            
+            <div class="text-center mb-6">
+                <div class="text-xl font-bold tracking-[0.4em] text-white mb-2">T E S L A</div>
+                <h3 class="text-lg font-bold text-white tracking-wider uppercase">Sign In to Account</h3>
+                <p class="text-[11px] text-gray-400 mt-1">Access your active reservation & dashboard</p>
+            </div>
+
+            <form onsubmit="handleLoginSubmit(event)" class="flex flex-col gap-3">
+                <div>
+                    <label class="block text-[11px] text-gray-400 mb-1">Email Address</label>
+                    <input type="email" id="loginEmailInput" required placeholder="hackbeekay@gmail.com" class="w-full bg-zinc-900 border border-gray-700 rounded px-3 py-2.5 text-xs text-white focus:outline-none">
+                </div>
+                <div>
+                    <div class="flex justify-between items-center mb-1">
+                        <label class="text-[11px] text-gray-400">Password</label>
+                        <a href="#" onclick="alert('Password reset instructions sent to your email.'); return false;" class="text-[10px] text-gray-400 hover:text-white transition">Forgot password?</a>
+                    </div>
+                    <input type="password" required placeholder="••••••••" class="w-full bg-zinc-900 border border-gray-700 rounded px-3 py-2.5 text-xs text-white focus:outline-none">
+                </div>
+                <div class="flex items-center gap-2 mt-0.5">
+                    <input type="checkbox" id="rememberMe" class="accent-white rounded">
+                    <label for="rememberMe" class="text-[11px] text-gray-400 cursor-pointer">Remember this device</label>
+                </div>
+                <button type="submit" class="w-full bg-white hover:bg-gray-200 text-black font-bold text-xs uppercase tracking-wider py-3.5 rounded transition mt-2">
+                    Sign In
+                </button>
+            </form>
+
+            <div class="mt-4 pt-3 border-t border-gray-800 text-center">
+                <p class="text-[10px] text-gray-500">Need a reservation? <button onclick="toggleModal('loginModal', false); toggleModal('reservationModal', true);" class="text-amber-400 underline">Reserve Roadster</button></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- TWO-FACTOR AUTHENTICATION (2FA) MODAL PROMPT -->
+    <div id="twoFactorModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden overflow-y-auto px-4 py-8 flex items-center justify-center">
+        <div class="bg-black border border-amber-500/50 rounded-xl p-6 w-full max-w-sm mx-auto text-center shadow-2xl relative">
+            <button onclick="toggleModal('twoFactorModal', false)" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl font-bold">✕</button>
+            
+            <div class="text-amber-400 text-3xl font-bold mb-1">🛡️</div>
+            <h3 class="text-lg font-bold text-white tracking-wider uppercase mb-1">Two-Factor Authentication</h3>
+            <p class="text-xs text-gray-400 mb-4">We sent a 6-digit security code to your email <span id="twoFactorEmailDisplay" class="text-amber-400 font-mono font-bold">hackbeekay@gmail.com</span>.</p>
+
+            <form onsubmit="handle2FASubmit(event)" class="flex flex-col gap-3 text-left">
+                <div>
+                    <label class="block text-[11px] text-gray-400 mb-1">Enter 6-Digit Code</label>
+                    <input type="text" id="twoFactorInput" maxlength="6" required placeholder="123456" class="w-full bg-zinc-900 border border-amber-500/80 rounded px-3 py-3 text-center tracking-[0.3em] font-mono text-base text-amber-400 font-bold focus:outline-none">
+                </div>
+                <button type="submit" class="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs uppercase tracking-wider py-3.5 rounded transition mt-2">
+                    Verify & Access Dashboard
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- OFFICIAL TESLA POST-PAYMENT CONFIRMATION MODAL -->
+    <div id="orderSuccessModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden overflow-y-auto px-4 py-8">
+        <div class="bg-black border border-gray-800 rounded-xl p-6 w-full max-w-lg mx-auto text-left shadow-2xl relative">
+            <button onclick="toggleModal('orderSuccessModal', false)" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl font-bold z-20">✕</button>
+
+            <div class="text-center mb-6">
+                <div class="w-14 h-14 border-2 border-green-500 rounded-full flex items-center justify-center mx-auto mb-3 bg-green-500/10">
+                    <span class="text-green-500 text-2xl font-bold">✓</span>
+                </div>
+                <div class="text-xs font-bold uppercase tracking-[0.3em] text-gray-400 mb-1">T E S L A</div>
+                <h2 class="text-2xl font-black text-white tracking-wider uppercase mb-1">Reservation Confirmed</h2>
+                <div class="inline-block bg-zinc-900 border border-gray-800 px-3 py-1 rounded text-xs text-amber-400 font-mono font-bold mt-1">
+                    Reservation Number: <span id="rnNumberDisplay">RN100294810</span>
+                </div>
+            </div>
+
+            <div class="bg-zinc-950 border border-gray-800 rounded-lg p-4 mb-6">
+                <p class="text-xs text-gray-300 leading-relaxed">
+                    Thank you for placing a reservation for a <strong>Tesla Roadster</strong>! Your account and identity verification have been successfully completed.
+                </p>
+            </div>
+
+            <div class="bg-zinc-900 border border-gray-800 rounded-lg p-4 mb-6 flex justify-between items-center text-xs">
+                <div>
+                    <div class="text-gray-400 uppercase tracking-wider text-[10px]">Paid Today</div>
+                    <div id="paidTodayDisplay" class="text-base font-bold text-green-400">$500</div>
+                </div>
+                <div class="text-right">
+                    <div class="text-gray-400 uppercase tracking-wider text-[10px]">Remaining Balance (Due in 30 Days)</div>
+                    <div id="remainingBalanceDisplay" class="text-base font-bold text-amber-400">$49,500</div>
+                </div>
+            </div>
+
+            <button onclick="toggleModal('orderSuccessModal', false); toggleModal('accountDashboardModal', true);" class="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs uppercase tracking-wider py-3.5 rounded transition mb-3">
+                Open Account Dashboard
+            </button>
+            <button onclick="toggleModal('orderSuccessModal', false)" class="w-full bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-xs uppercase tracking-wider py-3 rounded transition">
+                Return to Home
+            </button>
+        </div>
+    </div>
+
+    <!-- ACCOUNT DASHBOARD -->
+    <div id="accountDashboardModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden overflow-y-auto px-4 py-8">
+        <div class="bg-black border border-gray-800 rounded-xl p-6 w-full max-w-lg mx-auto text-left shadow-2xl relative">
+            <button onclick="toggleModal('accountDashboardModal', false)" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl font-bold z-20">✕</button>
+
+            <div class="flex justify-between items-center mb-4 border-b border-gray-800 pb-4">
+                <div>
+                    <div class="text-xs uppercase tracking-[0.3em] text-gray-400 font-bold">T E S L A</div>
+                    <h2 class="text-xl font-black text-white tracking-wider uppercase">Account Dashboard</h2>
+                </div>
+                <div id="dashboardEmail" class="text-xs text-amber-400 font-mono bg-zinc-900 border border-gray-800 px-3 py-1.5 rounded">
+                    hackbeekay@gmail.com
+                </div>
+            </div>
+
+            <div class="flex border-b border-gray-800 mb-6 overflow-x-auto">
+                <button id="btnTabOverview" onclick="switchDashboardTab('overview')" class="py-2 px-3 text-xs font-bold text-amber-400 border-b-2 border-amber-400 whitespace-nowrap transition">Overview</button>
+                <button id="btnTabTransactions" onclick="switchDashboardTab('transactions')" class="py-2 px-3 text-xs font-semibold text-gray-400 border-b-2 border-transparent whitespace-nowrap transition">Transactions</button>
+                <button id="btnTabSpecs" onclick="switchDashboardTab('specs')" class="py-2 px-3 text-xs font-semibold text-gray-400 border-b-2 border-transparent whitespace-nowrap transition">Vehicle Specs</button>
+                <button id="btnTabReferral" onclick="switchDashboardTab('referral')" class="py-2 px-3 text-xs font-semibold text-gray-400 border-b-2 border-transparent whitespace-nowrap transition">🎁 Referral Rewards</button>
+                <button id="btnTabDelivery" onclick="switchDashboardTab('delivery')" class="py-2 px-3 text-xs font-semibold text-gray-400 border-b-2 border-transparent whitespace-nowrap transition">🚚 Delivery Info</button>
+            </div>
+
+            <!-- OVERVIEW TAB -->
+            <div id="dashTabOverview" class="block">
+                <div class="bg-zinc-950 border border-gray-800 rounded-lg p-4 mb-6">
+                    <div class="flex justify-between items-center mb-3">
+                        <span id="dashTierName" class="text-xs font-bold uppercase tracking-wider text-white">Tesla Roadster Performance</span>
+                        <div class="flex items-center gap-2">
+                            <span id="dashboardRN" class="text-xs text-amber-400 font-mono font-bold bg-zinc-900 px-2.5 py-1 rounded">RN508146086</span>
+                            <button onclick="copyRNToClipboard()" class="bg-zinc-800 hover:bg-zinc-700 text-[10px] text-gray-300 px-2 py-1 rounded transition">📋</button>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-zinc-900 p-3 rounded mb-3 border border-gray-800 flex gap-4 items-center">
+                        <img src="car1.webp" alt="Roadster" class="w-20 h-14 object-cover rounded">
+                        <div>
+                            <div class="text-xs font-bold text-white">Estimated Delivery: 2026 / 2027</div>
+                            <div id="dashStatusText" class="text-[10px] text-green-400 font-semibold mt-0.5">● Priority Position Secured</div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2 text-xs bg-zinc-900/50 p-3 rounded border border-gray-800">
+                        <div>
+                            <div class="text-[10px] text-gray-400 uppercase">Paid Today</div>
+                            <div id="dashPaidToday" class="font-bold text-green-400 text-sm">$500</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-[10px] text-gray-400 uppercase">Remaining Balance (30 Days)</div>
+                            <div id="dashRemaining" class="font-bold text-amber-400 text-sm">$49,500</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-2.5">
+                    <button id="payBalanceBtn" onclick="openPayRemainingModal()" class="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs uppercase tracking-wider py-3.5 rounded transition">
+                        PAY PARTIAL / REMAINING BALANCE
+                    </button>
+                    <button onclick="downloadReceiptPDF()" class="w-full bg-zinc-900 hover:bg-zinc-800 border border-gray-700 text-white font-bold text-xs uppercase tracking-wider py-3 rounded transition">
+                        DOWNLOAD PAYMENT RECEIPT PDF
+                    </button>
+                    <button onclick="openAgreementPreviewModal()" class="w-full bg-zinc-900 hover:bg-zinc-800 border border-gray-700 text-white font-bold text-xs uppercase tracking-wider py-3 rounded transition flex items-center justify-center gap-2">
+                        <span>📄</span> VIEW RESERVATION AGREEMENT
+                    </button>
+                </div>
+            </div>
+
+            <!-- TRANSACTIONS TAB -->
+            <div id="dashTabTransactions" class="hidden">
+                <div class="bg-zinc-950 border border-gray-800 rounded-lg p-4 mb-6">
+                    <div class="text-xs font-bold text-white uppercase tracking-wider mb-3">Payment History & Ledger</div>
+                    <div id="dashboardTransactionList" class="flex flex-col gap-2.5 max-h-56 overflow-y-auto"></div>
+                </div>
+            </div>
+
+            <!-- SPECS TAB -->
+            <div id="dashTabSpecs" class="hidden">
+                <div class="bg-zinc-950 border border-gray-800 rounded-lg p-4 mb-6">
+                    <div id="specTierDisplay" class="text-sm font-bold text-amber-400 uppercase tracking-wider mb-4 text-center">TESLA ROADSTER PERFORMANCE</div>
+                    
+                    <div class="grid grid-cols-2 gap-3 text-xs mb-4">
+                        <!-- NATIVE SELECT INTERIOR TRIM -->
+                        <div class="bg-zinc-900 border border-gray-800 p-3 rounded flex flex-col justify-between">
+                            <div>
+                                <div class="text-[10px] text-gray-400 uppercase font-semibold mb-1">Interior Trim (100 options)</div>
+                                <select id="nativeInteriorSelect" onchange="handleInteriorChange(this.value)" class="w-full bg-black text-white border border-amber-500/80 rounded p-2 text-xs font-bold focus:outline-none cursor-pointer">
+                                    <!-- Populated dynamically -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- NATIVE SELECT WHEEL VARIANT -->
+                        <div class="bg-zinc-900 border border-gray-800 p-3 rounded flex flex-col justify-between">
+                            <div>
+                                <div class="text-[10px] text-gray-400 uppercase font-semibold mb-1">Wheel Variant (100 options)</div>
+                                <select id="nativeWheelSelect" onchange="handleWheelChange(this.value)" class="w-full bg-black text-white border border-amber-500/80 rounded p-2 text-xs font-bold focus:outline-none cursor-pointer">
+                                    <!-- Populated dynamically -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="bg-zinc-900 p-3 rounded border border-gray-800">
+                            <div class="text-[10px] text-gray-400 uppercase font-semibold mb-1">Acceleration</div>
+                            <div class="font-bold text-white text-sm">1.9s 0-60 mph</div>
+                        </div>
+
+                        <div class="bg-zinc-900 p-3 rounded border border-gray-800">
+                            <div class="text-[10px] text-gray-400 uppercase font-semibold mb-1">Top Speed</div>
+                            <div class="font-bold text-white text-sm">+250 mph</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- REFERRAL TAB -->
+            <div id="dashTabReferral" class="hidden">
+                <div class="bg-zinc-950 border border-amber-500/40 rounded-lg p-4 mb-5 text-center">
+                    <div class="text-amber-400 text-2xl font-bold mb-1">🎁</div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-1">Referral Rewards Tracker</h3>
+                    <p class="text-[11px] text-gray-400 mb-3">Share your link to unlock priority build slots and exclusive merchandise.</p>
+                    <div id="userRefCodeDisplay" class="text-[11px] text-amber-300 font-mono bg-stone-900 border border-amber-500/40 p-2.5 rounded mb-3 break-all select-all">
+                        https://tesla.com/roadster/ref/rn508146086
+                    </div>
+                    <button onclick="copyReferralLink()" class="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs uppercase tracking-wider py-2.5 rounded transition">
+                        Copy Link
+                    </button>
+                </div>
+            </div>
+
+            <!-- DELIVERY TAB -->
+            <div id="dashTabDelivery" class="hidden">
+                <form onsubmit="saveDeliveryAddress(event)" class="bg-zinc-950 border border-gray-800 rounded-lg p-4 mb-6 flex flex-col gap-3">
+                    <div class="text-xs font-bold text-white uppercase tracking-wider mb-1">Shipping & Delivery Logistics</div>
+                    <div>
+                        <label class="block text-[10px] uppercase text-gray-400 mb-1">Full Name / Entity</label>
+                        <input type="text" id="delName" required class="w-full bg-zinc-900 border border-gray-700 rounded px-3 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase text-gray-400 mb-1">Street Address</label>
+                        <input type="text" id="delAddress" required class="w-full bg-zinc-900 border border-gray-700 rounded px-3 py-2 text-xs text-white">
+                    </div>
+                    <div class="grid grid-cols-3 gap-2">
+                        <div>
+                            <label class="block text-[10px] uppercase text-gray-400 mb-1">City</label>
+                            <input type="text" id="delCity" required class="w-full bg-zinc-900 border border-gray-700 rounded px-2 py-2 text-xs text-white">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase text-gray-400 mb-1">State</label>
+                            <input type="text" id="delState" required class="w-full bg-zinc-900 border border-gray-700 rounded px-2 py-2 text-xs text-white">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase text-gray-400 mb-1">Zip Code</label>
+                            <input type="text" id="delZip" required class="w-full bg-zinc-900 border border-gray-700 rounded px-2 py-2 text-xs text-white">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase text-gray-400 mb-1">Phone Number</label>
+                        <input type="text" id="delPhone" required class="w-full bg-zinc-900 border border-gray-700 rounded px-3 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase text-gray-400 mb-1">Preferred Local Delivery Center</label>
+                        <select id="delCenter" class="w-full bg-zinc-900 border border-gray-700 rounded px-3 py-2 text-xs text-white">
+                            <option value="Austin Delivery Hub (Gigafactory Texas)">Austin Delivery Hub (Gigafactory Texas)</option>
+                            <option value="Los Angeles Delivery Center, CA">Los Angeles Delivery Center, CA</option>
+                            <option value="Miami Delivery Hub, FL">Miami Delivery Hub, FL</option>
+                            <option value="New York Service Center, NY">New York Service Center, NY</option>
+                            <option value="London Delivery Showroom, UK">London Delivery Showroom, UK</option>
+                            <option value="Dubai Hypercar Hub, UAE">Dubai Hypercar Hub, UAE</option>
+                            <option value="Berlin Gigafactory Delivery Hub, Germany">Berlin Gigafactory Delivery Hub, Germany</option>
+                            <option value="Monaco Exclusive Delivery Lounge, Monaco">Monaco Exclusive Delivery Lounge, Monaco</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs uppercase tracking-wider py-3 rounded transition mt-2">
+                        Save Logistics Details
+                    </button>
+                </form>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-gray-800">
+                <button onclick="toggleModal('accountDashboardModal', false)" class="w-full bg-black hover:bg-zinc-900 border border-gray-800 text-gray-400 font-semibold text-xs uppercase tracking-wider py-2.5 rounded transition">
+                    BACK TO HOME
+                </button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
